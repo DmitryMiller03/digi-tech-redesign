@@ -2,22 +2,23 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 export type Stat = { value: number; suffix: string; label: string };
 
 /**
- * Stats row that stays hidden until scrolled into view, then briefly pins
- * the viewport (a short, tunable scroll distance) while the numbers reveal
- * and count up — so the moment doesn't fly by if the user keeps scrolling.
+ * Stats row that stays hidden on load and only reveals + counts up once the
+ * user has actually scrolled a little (not just because the row happens to
+ * already sit inside the initial viewport). No pin, no movement — the
+ * numbers fade in exactly where they sit and count up in place.
  */
 export function PinnedStats({
   stats,
-  holdDistance = 300,
+  scrollThreshold = 60,
   className,
 }: {
   stats: Stat[];
-  holdDistance?: number;
+  scrollThreshold?: number;
   className?: string;
 }) {
   const containerRef = useRef<HTMLDListElement | null>(null);
@@ -32,47 +33,51 @@ export function PinnedStats({
         return;
       }
 
-      gsap.set(numberRefs.current, { autoAlpha: 0, y: 16 });
+      gsap.set(numberRefs.current, { autoAlpha: 0 });
+      let revealed = false;
 
-      const trigger = ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top 80%",
-        end: `+=${holdDistance}`,
-        pin: true,
-        onEnter: () => {
-          const tl = gsap.timeline();
-          tl.to(numberRefs.current, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.4,
-            stagger: 0.08,
-            ease: "power2.out",
-          });
+      function tryReveal() {
+        if (revealed || !containerRef.current) return;
+        if (window.scrollY < scrollThreshold) return;
 
-          stats.forEach((stat, i) => {
-            const proxy = { count: 0 };
-            const el = numberRefs.current[i];
-            tl.to(
-              proxy,
-              {
-                count: stat.value,
-                duration: 1,
-                ease: "power2.out",
-                onUpdate: () => {
-                  if (el) {
-                    el.textContent = `${Math.round(proxy.count).toLocaleString("ru-RU")}${stat.suffix}`;
-                  }
-                },
+        const rect = containerRef.current.getBoundingClientRect();
+        if (rect.top > window.innerHeight * 0.95) return;
+
+        revealed = true;
+        window.removeEventListener("scroll", tryReveal);
+
+        const tl = gsap.timeline();
+        tl.to(numberRefs.current, {
+          autoAlpha: 1,
+          duration: 0.4,
+          stagger: 0.08,
+          ease: "power1.out",
+        });
+
+        stats.forEach((stat, i) => {
+          const proxy = { count: 0 };
+          const el = numberRefs.current[i];
+          tl.to(
+            proxy,
+            {
+              count: stat.value,
+              duration: 1,
+              ease: "power2.out",
+              onUpdate: () => {
+                if (el) {
+                  el.textContent = `${Math.round(proxy.count).toLocaleString("ru-RU")}${stat.suffix}`;
+                }
               },
-              "<",
-            );
-          });
-        },
-      });
+            },
+            "<",
+          );
+        });
+      }
 
-      return () => trigger.kill();
+      window.addEventListener("scroll", tryReveal, { passive: true });
+      return () => window.removeEventListener("scroll", tryReveal);
     },
-    { scope: containerRef, dependencies: [stats, holdDistance] },
+    { scope: containerRef, dependencies: [stats, scrollThreshold] },
   );
 
   return (

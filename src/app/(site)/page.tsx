@@ -3,10 +3,8 @@ import { CATEGORIES } from "@/lib/catalog-content";
 import { CategoryIcon, ArrowRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { SplitHeadline } from "@/components/motion/SplitHeadline";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { HeroModulesCard } from "@/components/home/HeroModulesCard";
-import { HeroTypewriter } from "@/components/home/HeroTypewriter";
+import { HeroVideo } from "@/components/home/HeroVideo";
 import { PinnedStats } from "@/components/motion/PinnedStats";
 
 const STEPS = [
@@ -39,80 +37,18 @@ const DIRECTIONS = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.4]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-24 pt-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8 lg:pt-24">
-          <div>
-            <Reveal>
-              <span className="label inline-flex items-center gap-2 text-accent-2">
-                <span className="h-px w-6 bg-current" />
-                VR &amp; 3D · Профессиональное образование
-              </span>
-            </Reveal>
+      <HeroVideo />
 
-            <SplitHeadline
-              as="h1"
-              className="mt-4 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl"
-            >
-              Цифровое обучение для технических специальностей
-            </SplitHeadline>
-
-            <Reveal delay={0.15}>
-              <p className="mt-3 text-xl font-bold sm:text-2xl">
-                Решения для <HeroTypewriter />
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <p className="mt-6 max-w-xl text-lg text-fg-secondary">
-                Интерактивные 3D-сцены и VR-тренажёры для колледжей и техникумов. Студенты
-                изучают устройство оборудования в виртуальном пространстве — без риска и
-                затрат на физические стенды.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.3}>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <MagneticButton>
-                  <Link
-                    href="/contacts"
-                    className="group inline-flex items-center gap-2 rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white shadow-md"
-                  >
-                    Запросить демо
-                    <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </MagneticButton>
-                <MagneticButton strength={0.25}>
-                  <Link
-                    href="/catalog"
-                    className="rounded-pill border border-line-strong px-6 py-3.5 text-sm font-semibold text-fg-primary transition-colors hover:bg-bg-surface"
-                  >
-                    Смотреть каталог
-                  </Link>
-                </MagneticButton>
-              </div>
-            </Reveal>
-
-            <PinnedStats
-              className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-8"
-              stats={[
-                { value: 5000, suffix: "+", label: "студентов" },
-                { value: 11, suffix: "", label: "направлений" },
-                { value: 120, suffix: "+", label: "колледжей" },
-              ]}
-            />
-          </div>
-
-          <Reveal delay={0.2} className="lg:justify-self-end">
-            <HeroModulesCard />
-          </Reveal>
+      <section className="border-b border-line py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <PinnedStats
+            className="flex flex-wrap justify-center gap-x-16 gap-y-6 text-center sm:justify-between sm:text-left"
+            stats={[
+              { value: 5000, suffix: "+", label: "студентов" },
+              { value: 11, suffix: "", label: "направлений" },
+              { value: 120, suffix: "+", label: "колледжей" },
+            ]}
+          />
         </div>
       </section>
 
