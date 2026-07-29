@@ -7,7 +7,7 @@ import { SplitHeadline } from "@/components/motion/SplitHeadline";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { HeroModulesCard } from "@/components/home/HeroModulesCard";
 import { HeroTypewriter } from "@/components/home/HeroTypewriter";
-import { CountUp } from "@/components/motion/CountUp";
+import { PinnedStats } from "@/components/motion/PinnedStats";
 
 const STEPS = [
   {
@@ -100,22 +100,14 @@ export default function HomePage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.4}>
-              <dl className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-8">
-                {[
-                  { value: 5000, suffix: "+", label: "студентов" },
-                  { value: 11, suffix: "", label: "направлений" },
-                  { value: 120, suffix: "+", label: "колледжей" },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <dt className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent">
-                      <CountUp value={stat.value} suffix={stat.suffix} />
-                    </dt>
-                    <dd className="mt-1 text-sm text-fg-muted">{stat.label}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
+            <PinnedStats
+              className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-8"
+              stats={[
+                { value: 5000, suffix: "+", label: "студентов" },
+                { value: 11, suffix: "", label: "направлений" },
+                { value: 120, suffix: "+", label: "колледжей" },
+              ]}
+            />
           </div>
 
           <Reveal delay={0.2} className="lg:justify-self-end">

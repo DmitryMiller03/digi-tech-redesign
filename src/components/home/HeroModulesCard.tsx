@@ -50,9 +50,6 @@ export function HeroModulesCard() {
       className="w-full max-w-md overflow-hidden rounded-2xl border border-line bg-bg-page shadow-lg will-change-transform"
     >
       <div className="flex items-center gap-2 bg-gradient-to-r from-primary to-accent px-5 py-4 text-white">
-        <span className="flex h-6 w-6 items-center justify-center rounded bg-white/20 text-xs font-black">
-          D
-        </span>
         <span className="text-sm font-semibold">Digi Tech · Учебные модули</span>
       </div>
 

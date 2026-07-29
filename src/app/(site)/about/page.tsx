@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { CountUp } from "@/components/motion/CountUp";
+import { PinnedStats } from "@/components/motion/PinnedStats";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { ArrowRightIcon } from "@/components/icons";
 
@@ -42,22 +42,14 @@ export default function AboutPage() {
         </p>
       </Reveal>
 
-      <Reveal delay={0.15}>
-        <dl className="mt-12 flex flex-wrap gap-x-12 gap-y-6 border-y border-line py-8">
-          {[
-            { value: 5000, suffix: "+", label: "студентов" },
-            { value: 11, suffix: "", label: "направлений подготовки" },
-            { value: 120, suffix: "+", label: "колледжей и техникумов" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <dt className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent">
-                <CountUp value={stat.value} suffix={stat.suffix} />
-              </dt>
-              <dd className="mt-1 text-sm text-fg-muted">{stat.label}</dd>
-            </div>
-          ))}
-        </dl>
-      </Reveal>
+      <PinnedStats
+        className="mt-12 flex flex-wrap gap-x-12 gap-y-6 border-y border-line py-8"
+        stats={[
+          { value: 5000, suffix: "+", label: "студентов" },
+          { value: 11, suffix: "", label: "направлений подготовки" },
+          { value: 120, suffix: "+", label: "колледжей и техникумов" },
+        ]}
+      />
 
       <div className="mt-16">
         <Reveal>
