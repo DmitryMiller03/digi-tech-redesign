@@ -45,7 +45,13 @@ export function PageTransitionOverlay() {
       if (anchor.hasAttribute("download") || href === pathname) return;
       if (isTransitioning.current || !overlayRef.current) return;
 
+      // Capture-phase + stopPropagation: this must win the race against Next's
+      // own Link click handler (registered on the React root, which fires on
+      // bubble) — otherwise Next sometimes finishes its own navigation before
+      // our curtain even starts, which is what caused the "sometimes works"
+      // inconsistency.
       e.preventDefault();
+      e.stopPropagation();
       isTransitioning.current = true;
 
       gsap.set(overlayRef.current, { transformOrigin: "top" });
@@ -57,8 +63,8 @@ export function PageTransitionOverlay() {
       });
     }
 
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
+    document.addEventListener("click", handleClick, true);
+    return () => document.removeEventListener("click", handleClick, true);
   }, [pathname, router]);
 
   return (
