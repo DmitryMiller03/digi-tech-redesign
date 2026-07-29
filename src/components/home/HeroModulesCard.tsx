@@ -1,0 +1,53 @@
+import { CategoryIcon } from "@/components/icons";
+
+const MODULES = [
+  { name: "Электроэнергетика", icon: "electric", progress: 72, status: "В процессе" },
+  { name: "Нефтегазовая переработка", icon: "oil", progress: 100, status: "Завершено" },
+  { name: "Машиностроение", icon: "machinery", progress: 45, status: "В процессе" },
+  { name: "Автотренажёры", icon: "vehicle", progress: 0, status: "Не начато" },
+] as const;
+
+const STATUS_STYLE: Record<string, string> = {
+  "В процессе": "bg-primary/10 text-primary",
+  Завершено: "bg-accent/15 text-accent-2",
+  "Не начато": "bg-fg-muted/10 text-fg-muted",
+};
+
+export function HeroModulesCard() {
+  return (
+    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-line bg-bg-page shadow-lg">
+      <div className="flex items-center gap-2 bg-gradient-to-r from-primary to-accent px-5 py-4 text-white">
+        <span className="flex h-6 w-6 items-center justify-center rounded bg-white/20 text-xs font-black">
+          D
+        </span>
+        <span className="text-sm font-semibold">Digi Tech · Учебные модули</span>
+      </div>
+
+      <div className="space-y-4 p-5">
+        {MODULES.map((module) => (
+          <div key={module.name} className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-bg-surface text-primary">
+              <CategoryIcon icon={module.icon} className="h-5 w-5" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-2">
+                <span className="truncate text-sm font-semibold">{module.name}</span>
+                <span
+                  className={`shrink-0 rounded-pill px-2 py-0.5 text-[11px] font-semibold ${STATUS_STYLE[module.status]}`}
+                >
+                  {module.status}
+                </span>
+              </div>
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-pill bg-bg-surface">
+                <div
+                  className="h-full rounded-pill bg-gradient-to-r from-primary to-accent"
+                  style={{ width: `${module.progress}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

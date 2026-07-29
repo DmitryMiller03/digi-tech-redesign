@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #1e6fee;
+  --primary-hover: #1657c4;
+  --accent: #2fd9c0;
+  --accent-2: #22c1ab;
+
+  --bg-page: #ffffff;
+  --bg-surface: #f4f5f7;
+  --bg-surface-hover: #eceef1;
+  --bg-overlay: rgba(20, 20, 20, 0.55);
+
+  --fg-primary: #141414;
+  --fg-secondary: #3f3f46;
+  --fg-muted: #9ca3af;
+  --fg-on-primary: #ffffff;
+
+  --line: #e5e7eb;
+  --line-strong: #d8dbe0;
+
+  --gradient-brand: linear-gradient(135deg, #1e6fee 0%, #2fd9c0 100%);
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 20, 0.06);
+  --shadow-md: 0 8px 24px rgba(20, 20, 20, 0.08);
+  --shadow-lg: 0 20px 48px rgba(20, 20, 20, 0.14);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --primary: #2767fb;
+  --primary-hover: #4b84ff;
+  --accent: #32ced1;
+  --accent-2: #39ebb8;
+
+  --bg-page: #0d1117;
+  --bg-surface: #161c27;
+  --bg-surface-hover: #1c2436;
+  --bg-overlay: rgba(13, 17, 23, 0.88);
+
+  --fg-primary: #ffffff;
+  --fg-secondary: #c3c9d4;
+  --fg-muted: #8892a4;
+  --fg-on-primary: #ffffff;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
+
+  --gradient-brand: linear-gradient(135deg, #2767fb 0%, #32ced1 60%, #39ebb8 100%);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.5);
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+
+  --color-bg-page: var(--bg-page);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-hover: var(--bg-surface-hover);
+
+  --color-fg-primary: var(--fg-primary);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-on-primary: var(--fg-on-primary);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --font-sans: var(--font-montserrat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+}
+
+* {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
 }
