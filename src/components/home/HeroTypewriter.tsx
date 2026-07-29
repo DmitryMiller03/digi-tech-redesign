@@ -15,11 +15,22 @@ const WORDS = [
 
 export function HeroTypewriter() {
   const textRef = useRef<HTMLSpanElement | null>(null);
+  const cursorRef = useRef<HTMLSpanElement | null>(null);
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       if (textRef.current) textRef.current.textContent = WORDS[0];
       return;
+    }
+
+    if (cursorRef.current) {
+      gsap.to(cursorRef.current, {
+        opacity: 0.1,
+        duration: 0.25,
+        repeat: -1,
+        yoyo: true,
+        ease: "steps(1)",
+      });
     }
 
     const el = textRef.current;
@@ -72,7 +83,10 @@ export function HeroTypewriter() {
   return (
     <span className="inline-flex items-baseline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
       <span ref={textRef} />
-      <span className="ml-0.5 inline-block h-[0.9em] w-[2px] translate-y-[0.1em] animate-pulse bg-accent-2" />
+      <span
+        ref={cursorRef}
+        className="ml-1.5 inline-block h-[0.85em] w-[5px] translate-y-[0.1em] rounded-full bg-accent-2 shadow-[0_0_12px_rgba(57,235,184,0.7)]"
+      />
     </span>
   );
 }

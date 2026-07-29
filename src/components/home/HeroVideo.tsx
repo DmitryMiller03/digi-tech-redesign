@@ -23,7 +23,7 @@ export function HeroVideo() {
     <section className="relative h-screen w-full overflow-hidden bg-black">
       <video
         ref={videoRef}
-        className="absolute left-1/2 top-0 h-[135%] w-auto max-w-none -translate-x-1/2"
+        className="absolute left-1/2 top-0 h-[128%] w-auto max-w-none -translate-x-1/2"
         src="/hero-video.mp4"
         autoPlay
         muted

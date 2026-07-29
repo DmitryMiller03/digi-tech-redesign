@@ -155,7 +155,7 @@ export default function HomePage() {
               <MagneticButton className="mt-8">
                 <Link
                   href="/contacts"
-                  className="group inline-flex items-center gap-2 rounded-pill bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-md"
+                  className="group inline-flex items-center gap-2 rounded-pill bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-md"
                 >
                   Запросить демо
                   <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />

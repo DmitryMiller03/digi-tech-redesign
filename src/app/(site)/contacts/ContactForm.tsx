@@ -77,7 +77,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={pending}
-          className="rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3 text-sm font-semibold text-white disabled:opacity-60"
+          className="rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white disabled:opacity-60"
         >
           {pending ? "Отправляем…" : "Отправить заявку"}
         </button>
