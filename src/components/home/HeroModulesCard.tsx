@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
 import { CategoryIcon } from "@/components/icons";
 
 const MODULES = [
@@ -14,8 +19,36 @@ const STATUS_STYLE: Record<string, string> = {
 };
 
 export function HeroModulesCard() {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia("(pointer: coarse)").matches) return;
+
+      const xTo = gsap.quickTo(ref.current, "x", { duration: 0.8, ease: "power3.out" });
+      const yTo = gsap.quickTo(ref.current, "y", { duration: 0.8, ease: "power3.out" });
+      const rotateTo = gsap.quickTo(ref.current, "rotate", { duration: 0.8, ease: "power3.out" });
+
+      const onMove = (e: MouseEvent) => {
+        const relX = e.clientX / window.innerWidth - 0.5;
+        const relY = e.clientY / window.innerHeight - 0.5;
+        xTo(relX * 16);
+        yTo(relY * 16);
+        rotateTo(relX * -1.5);
+      };
+
+      window.addEventListener("mousemove", onMove);
+      return () => window.removeEventListener("mousemove", onMove);
+    },
+    { scope: ref },
+  );
+
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-line bg-bg-page shadow-lg">
+    <div
+      ref={ref}
+      className="w-full max-w-md overflow-hidden rounded-2xl border border-line bg-bg-page shadow-lg will-change-transform"
+    >
       <div className="flex items-center gap-2 bg-gradient-to-r from-primary to-accent px-5 py-4 text-white">
         <span className="flex h-6 w-6 items-center justify-center rounded bg-white/20 text-xs font-black">
           D

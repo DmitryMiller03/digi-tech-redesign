@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/catalog-content";
+import { Logo } from "@/components/Logo";
 
 export function Footer() {
   return (
@@ -7,12 +8,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 text-lg font-extrabold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-primary to-accent text-sm font-black text-white">
-                D
-              </span>
-              Digi Tech
-            </div>
+            <Logo />
             <p className="mt-3 max-w-xs text-sm text-fg-muted">
               Виртуальные тренажёры и лабораторные комплексы для практического обучения
               студентов техникумов и колледжей.

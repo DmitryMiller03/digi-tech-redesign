@@ -1,8 +1,9 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { prisma } from "../src/lib/prisma";
+import { CATEGORIES } from "../src/lib/catalog-content";
 
-async function main() {
+async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
 
@@ -24,6 +25,32 @@ async function main() {
   });
 
   console.log(`Seeded admin user: ${admin.email}`);
+}
+
+async function seedCategories() {
+  for (const [index, category] of CATEGORIES.entries()) {
+    await prisma.category.upsert({
+      where: { slug: category.slug },
+      update: {
+        name: category.name,
+        description: category.shortDescription,
+        order: index,
+      },
+      create: {
+        slug: category.slug,
+        name: category.name,
+        description: category.shortDescription,
+        order: index,
+      },
+    });
+  }
+
+  console.log(`Seeded ${CATEGORIES.length} real catalog categories.`);
+}
+
+async function main() {
+  await seedAdmin();
+  await seedCategories();
 }
 
 main()

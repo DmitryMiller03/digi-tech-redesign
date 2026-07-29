@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MenuIcon, CloseIcon } from "@/components/icons";
+import { Logo } from "@/components/Logo";
 
 const NAV_LINKS = [
   { href: "/catalog", label: "Каталог" },
@@ -20,11 +21,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-bg-page/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-primary to-accent text-sm font-black text-white">
-            D
-          </span>
-          Digi Tech
+        <Link href="/" aria-label="Digi Tech">
+          <Logo animate />
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">

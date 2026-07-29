@@ -4,7 +4,10 @@ import { CategoryIcon, ArrowRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { SplitHeadline } from "@/components/motion/SplitHeadline";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 import { HeroModulesCard } from "@/components/home/HeroModulesCard";
+import { HeroTypewriter } from "@/components/home/HeroTypewriter";
+import { CountUp } from "@/components/motion/CountUp";
 
 const STEPS = [
   {
@@ -61,6 +64,12 @@ export default function HomePage() {
               Цифровое обучение для технических специальностей
             </SplitHeadline>
 
+            <Reveal delay={0.15}>
+              <p className="mt-3 text-xl font-bold sm:text-2xl">
+                Решения для <HeroTypewriter />
+              </p>
+            </Reveal>
+
             <Reveal delay={0.2}>
               <p className="mt-6 max-w-xl text-lg text-fg-secondary">
                 Интерактивные 3D-сцены и VR-тренажёры для колледжей и техникумов. Студенты
@@ -71,34 +80,38 @@ export default function HomePage() {
 
             <Reveal delay={0.3}>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link
-                  href="/contacts"
-                  className="group inline-flex items-center gap-2 rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-transform hover:scale-[1.03]"
-                >
-                  Запросить демо
-                  <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="/catalog"
-                  className="rounded-pill border border-line-strong px-6 py-3.5 text-sm font-semibold text-fg-primary transition-colors hover:bg-bg-surface"
-                >
-                  Смотреть каталог
-                </Link>
+                <MagneticButton>
+                  <Link
+                    href="/contacts"
+                    className="group inline-flex items-center gap-2 rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white shadow-md"
+                  >
+                    Запросить демо
+                    <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </MagneticButton>
+                <MagneticButton strength={0.25}>
+                  <Link
+                    href="/catalog"
+                    className="rounded-pill border border-line-strong px-6 py-3.5 text-sm font-semibold text-fg-primary transition-colors hover:bg-bg-surface"
+                  >
+                    Смотреть каталог
+                  </Link>
+                </MagneticButton>
               </div>
             </Reveal>
 
             <Reveal delay={0.4}>
               <dl className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-8">
                 {[
-                  ["5 000+", "студентов"],
-                  ["11", "направлений"],
-                  ["120+", "колледжей"],
-                ].map(([value, label]) => (
-                  <div key={label}>
+                  { value: 5000, suffix: "+", label: "студентов" },
+                  { value: 11, suffix: "", label: "направлений" },
+                  { value: 120, suffix: "+", label: "колледжей" },
+                ].map((stat) => (
+                  <div key={stat.label}>
                     <dt className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent">
-                      {value}
+                      <CountUp value={stat.value} suffix={stat.suffix} />
                     </dt>
-                    <dd className="mt-1 text-sm text-fg-muted">{label}</dd>
+                    <dd className="mt-1 text-sm text-fg-muted">{stat.label}</dd>
                   </div>
                 ))}
               </dl>
@@ -211,13 +224,15 @@ export default function HomePage() {
                 Оставьте заявку — покажем демо-версию под ваши специальности в течение
                 одного рабочего дня.
               </p>
-              <Link
-                href="/contacts"
-                className="mt-8 inline-flex items-center gap-2 rounded-pill bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-md transition-transform hover:scale-[1.03]"
-              >
-                Запросить демо
-                <ArrowRightIcon className="h-4 w-4" />
-              </Link>
+              <MagneticButton className="mt-8">
+                <Link
+                  href="/contacts"
+                  className="group inline-flex items-center gap-2 rounded-pill bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-md"
+                >
+                  Запросить демо
+                  <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </MagneticButton>
             </div>
           </Reveal>
         </div>
