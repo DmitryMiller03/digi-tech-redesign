@@ -100,6 +100,51 @@ export default async function EditProductPage({
             className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
         </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700">
+            Комплектация <span className="text-slate-400">(что входит в поставку, по одному пункту на строку)</span>
+          </label>
+          <textarea
+            name="kitContents"
+            rows={3}
+            defaultValue={product.kitContents.join("\n")}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700">
+            Цена, ₽ <span className="text-slate-400">(оставьте пустым для «цена по запросу»)</span>
+          </label>
+          <input
+            name="price"
+            type="number"
+            min={0}
+            defaultValue={product.price ?? ""}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700">
+              Группа вариантов <span className="text-slate-400">(ID)</span>
+            </label>
+            <input
+              name="variantGroupId"
+              defaultValue={product.variantGroupId ?? ""}
+              placeholder="напр. tokarny-stanok"
+              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">Название варианта</label>
+            <input
+              name="variantLabel"
+              defaultValue={product.variantLabel ?? ""}
+              placeholder="Версия ПК / Версия VR"
+              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            />
+          </div>
+        </div>
         <label className="flex items-center gap-2 text-sm text-slate-700">
           <input
             type="checkbox"

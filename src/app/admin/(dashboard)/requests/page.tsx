@@ -3,7 +3,10 @@ import { deleteRequest } from "./actions";
 import { StatusSelect } from "./StatusSelect";
 
 export default async function RequestsPage() {
-  const requests = await prisma.contactRequest.findMany({ orderBy: { createdAt: "desc" } });
+  const requests = await prisma.contactRequest.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { items: true },
+  });
 
   return (
     <div>
@@ -13,8 +16,8 @@ export default async function RequestsPage() {
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
             <tr>
-              <th className="px-4 py-3">Имя / контакты</th>
-              <th className="px-4 py-3">Сообщение</th>
+              <th className="px-4 py-3">Имя / компания / контакты</th>
+              <th className="px-4 py-3">Сообщение / товары</th>
               <th className="px-4 py-3">Источник</th>
               <th className="px-4 py-3">Статус</th>
               <th className="px-4 py-3" />
@@ -25,10 +28,22 @@ export default async function RequestsPage() {
               <tr key={request.id}>
                 <td className="px-4 py-3">
                   <div className="font-medium text-slate-900">{request.name}</div>
+                  {request.company && <div className="text-slate-500">{request.company}</div>}
                   <div className="text-slate-500">{request.phone}</div>
                   {request.email && <div className="text-slate-500">{request.email}</div>}
                 </td>
-                <td className="max-w-xs px-4 py-3 text-slate-600">{request.message}</td>
+                <td className="max-w-xs px-4 py-3 text-slate-600">
+                  {request.message}
+                  {request.items.length > 0 && (
+                    <ul className="mt-1 space-y-0.5 text-xs text-slate-500">
+                      {request.items.map((item) => (
+                        <li key={item.id}>
+                          {item.quantity}× {item.productName}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </td>
                 <td className="px-4 py-3 text-slate-500">{request.sourcePage}</td>
                 <td className="px-4 py-3">
                   <StatusSelect id={request.id} status={request.status} />

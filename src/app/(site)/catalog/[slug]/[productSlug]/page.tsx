@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/motion/Reveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { ArrowRightIcon } from "@/components/icons";
+import { AddToCartButton } from "./AddToCartButton";
+import { VariantTabs } from "./VariantTabs";
 
 async function getProduct(categorySlug: string, productSlug: string) {
   const product = await prisma.product.findUnique({
@@ -13,6 +15,19 @@ async function getProduct(categorySlug: string, productSlug: string) {
   });
   if (!product || product.category.slug !== categorySlug) return null;
   return product;
+}
+
+async function getVariants(variantGroupId: string | null) {
+  if (!variantGroupId) return [];
+  return prisma.product.findMany({
+    where: { variantGroupId, isPublished: true },
+    select: { slug: true, variantLabel: true, order: true },
+    orderBy: { order: "asc" },
+  });
+}
+
+function formatPrice(price: number) {
+  return `${price.toLocaleString("ru-RU")} ₽`;
 }
 
 export async function generateMetadata({
@@ -38,7 +53,10 @@ export default async function ProductPage({
   const product = await getProduct(slug, productSlug);
   if (!product) notFound();
 
-  const specs = (product.specs as Record<string, string> | null) ?? null;
+  const [specs, variants] = [
+    (product.specs as Record<string, string> | null) ?? null,
+    await getVariants(product.variantGroupId),
+  ];
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
@@ -61,13 +79,48 @@ export default async function ProductPage({
         )}
       </Reveal>
 
+      {variants.length > 1 && (
+        <Reveal className="mt-6">
+          <VariantTabs categorySlug={product.category.slug} activeSlug={product.slug} variants={variants} />
+        </Reveal>
+      )}
+
+      <Reveal delay={0.1}>
+        <div className="mt-6 flex flex-wrap items-center gap-4 border-y border-line py-4">
+          <span className="text-xl font-bold">
+            {product.price !== null ? formatPrice(product.price) : "Цена по запросу"}
+          </span>
+          <AddToCartButton
+            productId={product.id}
+            slug={product.slug}
+            categorySlug={product.category.slug}
+            name={product.name}
+            price={product.price}
+          />
+        </div>
+      </Reveal>
+
       <div className="mt-10 grid gap-10 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+        <div className="space-y-8 lg:col-span-2">
           {product.description && (
             <Reveal>
               <div className="whitespace-pre-line leading-relaxed text-fg-secondary">
                 {product.description}
               </div>
+            </Reveal>
+          )}
+
+          {product.kitContents.length > 0 && (
+            <Reveal>
+              <h2 className="text-lg font-bold">Комплектация</h2>
+              <ul className="mt-3 space-y-2 text-fg-secondary">
+                {product.kitContents.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="text-primary">—</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           )}
         </div>

@@ -63,11 +63,27 @@ model Product {
   images           String[] @default([])
   /// Free-form technical characteristics, e.g. {"Мощность": "5 кВт", "Габариты": "..."}
   specs            Json?
+  /// What's included in the delivery (e.g. "Программное обеспечение на носителе",
+  /// "Руководство по эксплуатации") — distinct from specs, shown as its own section.
+  kitContents      String[] @default([])
+  /// Price in RUB. Null means "цена по запросу" (price on request) — the
+  /// source site mixes both models across the catalog, so this must stay
+  /// optional rather than assuming every product has a listed price.
+  price            Int?
   order            Int      @default(0)
   isPublished      Boolean  @default(true)
 
+  /// Groups variants of the same underlying product (e.g. "Версия ПК" vs
+  /// "Версия VR") so the product page can render them as a tab/selector.
+  /// Products sharing a variantGroupId are siblings; variantLabel is what's
+  /// shown on the tab for this particular row.
+  variantGroupId String?
+  variantLabel   String?
+
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  contactRequestItems ContactRequestItem[]
 
   seoTitle       String?
   seoDescription String?
@@ -76,6 +92,7 @@ model Product {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([variantGroupId])
   @@map("products")
 }
 
@@ -140,19 +157,38 @@ enum ContactRequestStatus {
 
 /// Every "Оставить заявку" form submission across the site lands here,
 /// tagged with where it came from so the admin can see what's converting.
+/// Cart checkouts land here too, with their line items in `items`.
 model ContactRequest {
   id         String               @id @default(cuid())
   name       String
+  company    String?
   phone      String
   email      String?
   message    String?
   sourcePage String
-  productId  String?
   status     ContactRequestStatus @default(NEW)
+
+  items ContactRequestItem[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([status])
   @@map("contact_requests")
+}
+
+/// A cart line item snapshotted onto a submitted request. productName is a
+/// snapshot (kept even if the product is later edited/removed) so the
+/// admin's request inbox always shows what was actually asked for.
+model ContactRequestItem {
+  id               String  @id @default(cuid())
+  contactRequestId String
+  contactRequest   ContactRequest @relation(fields: [contactRequestId], references: [id], onDelete: Cascade)
+  productId        String?
+  product          Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName      String
+  quantity         Int      @default(1)
+
+  @@index([contactRequestId])
+  @@map("contact_request_items")
 }

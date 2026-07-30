@@ -6,14 +6,21 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MenuIcon, CloseIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
+import { CartIcon } from "@/components/layout/CartIcon";
+import { AudienceDropdown } from "@/components/layout/AudienceDropdown";
 
 const NAV_LINKS = [
   { href: "/catalog", label: "Каталог" },
-  { href: "/#how-it-works", label: "Как это работает" },
-  { href: "/professionalism", label: "Профессионалитет" },
   { href: "/about", label: "О компании" },
   { href: "/blog", label: "Блог" },
   { href: "/contacts", label: "Контакты" },
+];
+
+const AUDIENCE_LINKS_MOBILE = [
+  { href: "/vuzy", label: "Высшие учебные заведения" },
+  { href: "/ssuzy", label: "Средне-специальные учебные заведения" },
+  { href: "/predpriyatiya", label: "Предприятия" },
+  { href: "/professionalism", label: "Профессионалитет" },
 ];
 
 export function Header() {
@@ -51,7 +58,14 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
-          {NAV_LINKS.map((link) => (
+          <Link
+            href="/catalog"
+            className="text-sm font-medium text-fg-secondary transition-colors hover:text-fg-primary"
+          >
+            Каталог
+          </Link>
+          <AudienceDropdown />
+          {NAV_LINKS.slice(1).map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -62,13 +76,14 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Link
             href="/contacts"
             className="hidden rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.03] sm:block"
           >
             Оставить заявку
           </Link>
+          <CartIcon />
           <ThemeToggle />
           <button
             type="button"
@@ -84,7 +99,28 @@ export function Header() {
       {open && (
         <nav className="border-t border-line px-4 py-4 lg:hidden">
           <div className="flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
+            <Link
+              href="/catalog"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-fg-secondary hover:bg-bg-surface hover:text-fg-primary"
+            >
+              Каталог
+            </Link>
+
+            <div className="label mt-2 px-3 text-accent-2">Клиентам</div>
+            {AUDIENCE_LINKS_MOBILE.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-fg-secondary hover:bg-bg-surface hover:text-fg-primary"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <div className="mt-2 border-t border-line pt-2" />
+            {NAV_LINKS.slice(1).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

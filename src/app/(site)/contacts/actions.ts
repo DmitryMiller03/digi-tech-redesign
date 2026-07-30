@@ -12,6 +12,7 @@ export async function submitContactRequest(
   formData: FormData,
 ): Promise<ContactFormState> {
   const name = String(formData.get("name") ?? "").trim();
+  const company = String(formData.get("company") ?? "").trim() || null;
   const phone = String(formData.get("phone") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim() || null;
   const message = String(formData.get("message") ?? "").trim() || null;
@@ -21,7 +22,7 @@ export async function submitContactRequest(
   }
 
   await prisma.contactRequest.create({
-    data: { name, phone, email, message, sourcePage: "/contacts" },
+    data: { name, company, phone, email, message, sourcePage: "/contacts" },
   });
 
   return { ok: true, message: "Заявка отправлена! Свяжемся с вами в течение рабочего дня." };

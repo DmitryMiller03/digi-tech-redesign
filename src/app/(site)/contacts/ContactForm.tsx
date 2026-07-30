@@ -49,6 +49,13 @@ export function ContactForm() {
         />
       </div>
       <div>
+        <label className="block text-sm font-medium text-fg-secondary">Компания</label>
+        <input
+          name="company"
+          className="mt-1 w-full rounded-lg border border-line-strong bg-bg-page px-3 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+        />
+      </div>
+      <div>
         <label className="block text-sm font-medium text-fg-secondary">Телефон</label>
         <input
           name="phone"

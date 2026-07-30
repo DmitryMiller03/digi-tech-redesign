@@ -29,7 +29,7 @@ function parseSpecs(raw: string): Record<string, string> | undefined {
   return specs;
 }
 
-function parseImages(raw: string): string[] {
+function parseLines(raw: string): string[] {
   return raw
     .split("\n")
     .map((line) => line.trim())
@@ -37,14 +37,20 @@ function parseImages(raw: string): string[] {
 }
 
 function readProductFields(formData: FormData) {
+  const priceRaw = String(formData.get("price") ?? "").trim();
+
   return {
     name: String(formData.get("name") ?? "").trim(),
     slug: String(formData.get("slug") ?? "").trim(),
     categoryId: String(formData.get("categoryId") ?? ""),
     shortDescription: String(formData.get("shortDescription") ?? "") || null,
     description: String(formData.get("description") ?? "") || null,
-    images: parseImages(String(formData.get("images") ?? "")),
+    images: parseLines(String(formData.get("images") ?? "")),
     specs: parseSpecs(String(formData.get("specs") ?? "")),
+    kitContents: parseLines(String(formData.get("kitContents") ?? "")),
+    price: priceRaw ? Number(priceRaw) : null,
+    variantGroupId: String(formData.get("variantGroupId") ?? "").trim() || null,
+    variantLabel: String(formData.get("variantLabel") ?? "").trim() || null,
   };
 }
 
@@ -62,6 +68,10 @@ export async function createProduct(formData: FormData) {
       description: fields.description,
       images: fields.images,
       specs: fields.specs,
+      kitContents: fields.kitContents,
+      price: fields.price,
+      variantGroupId: fields.variantGroupId,
+      variantLabel: fields.variantLabel,
     },
   });
 
@@ -85,6 +95,10 @@ export async function updateProduct(id: string, formData: FormData) {
       description: fields.description,
       images: fields.images,
       specs: fields.specs,
+      kitContents: fields.kitContents,
+      price: fields.price,
+      variantGroupId: fields.variantGroupId,
+      variantLabel: fields.variantLabel,
       isPublished,
     },
   });

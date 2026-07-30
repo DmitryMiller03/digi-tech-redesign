@@ -78,6 +78,51 @@ export default async function NewProductPage() {
             className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
         </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700">
+            Комплектация <span className="text-slate-400">(что входит в поставку, по одному пункту на строку)</span>
+          </label>
+          <textarea
+            name="kitContents"
+            rows={3}
+            placeholder={"Программное обеспечение на носителе\nРуководство по эксплуатации\nПаспорт"}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700">
+            Цена, ₽ <span className="text-slate-400">(оставьте пустым для «цена по запросу»)</span>
+          </label>
+          <input
+            name="price"
+            type="number"
+            min={0}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700">
+              Группа вариантов <span className="text-slate-400">(ID)</span>
+            </label>
+            <input
+              name="variantGroupId"
+              placeholder="напр. tokarny-stanok"
+              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            />
+            <p className="mt-1 text-xs text-slate-400">
+              Одинаковое значение у нескольких товаров группирует их как варианты одного изделия.
+            </p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">Название варианта</label>
+            <input
+              name="variantLabel"
+              placeholder="Версия ПК / Версия VR"
+              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            />
+          </div>
+        </div>
         <button
           type="submit"
           className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
