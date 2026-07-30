@@ -34,14 +34,7 @@ export function HeroVideo() {
 
       <div className="relative z-10 flex h-full flex-col items-start justify-center px-4 sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-7xl">
-          <Reveal>
-            <span className="label inline-flex items-center gap-2 text-accent-2">
-              <span className="h-px w-6 bg-current" />
-              VR &amp; 3D · Профессиональное образование
-            </span>
-          </Reveal>
-
-          <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
             Практика для будущих
             <br />
             <HeroTypewriter />
@@ -49,8 +42,8 @@ export function HeroVideo() {
 
           <Reveal delay={0.2}>
             <p className="mt-6 max-w-xl text-lg text-white/80">
-              VR и 3D-тренажёры для практических занятий — начать можно уже сегодня, без
-              риска для здоровья и дорогостоящего оборудования.
+              Изучайте оборудование, выполняйте рабочие операции и учитесь на ошибках в
+              безопасной цифровой среде.
             </p>
           </Reveal>
 
