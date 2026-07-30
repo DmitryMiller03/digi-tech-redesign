@@ -42,15 +42,15 @@ export function HeroVideo() {
           </Reveal>
 
           <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Цифровое обучение для
+            Практика для будущих
             <br />
             <HeroTypewriter />
           </h1>
 
           <Reveal delay={0.2}>
             <p className="mt-6 max-w-xl text-lg text-white/80">
-              Интерактивные 3D-сцены и VR-тренажёры для колледжей и техникумов — без риска и
-              затрат на физические стенды.
+              VR и 3D-тренажёры для практических занятий — начать можно уже сегодня, без
+              риска для здоровья и дорогостоящего оборудования.
             </p>
           </Reveal>
 

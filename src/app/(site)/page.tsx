@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/catalog-content";
-import { CategoryIcon, ArrowRightIcon } from "@/components/icons";
+import { CategoryIcon, FormatIcon, ArrowRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { MagneticButton } from "@/components/motion/MagneticButton";
@@ -26,12 +26,36 @@ const STEPS = [
 ];
 
 const DIRECTIONS = [
-  { title: "Лабораторные стенды", description: "Физические комплексы для практикума по электротехнике и химии." },
-  { title: "Учебные стенды", description: "Наглядные модели устройства оборудования для аудиторных занятий." },
-  { title: "Интерактивные стенды", description: "Сенсорные панели с 3D-моделями узлов и агрегатов." },
-  { title: "Мастерские", description: "Комплекты для практических работ по столярному и слесарному делу." },
-  { title: "Программные комплексы", description: "3D-атласы устройства оборудования для изучения в браузере." },
-  { title: "VR-тренажёры", description: "Полное погружение в виртуальную среду с реалистичной физикой." },
+  {
+    icon: "lab",
+    title: "Лабораторный стенд",
+    description: "Имитирует реальные технические системы — студенты отрабатывают навыки, не рискуя дорогостоящим оборудованием.",
+  },
+  {
+    icon: "teaching",
+    title: "Учебный стенд",
+    description: "Компактная модель оборудования: наглядно показывает устройство и принцип работы, от азов до сложных задач.",
+  },
+  {
+    icon: "interactive",
+    title: "Интерактивный стенд",
+    description: "Сочетает физику с цифрой — система сама анализирует действия студента и указывает на ошибки.",
+  },
+  {
+    icon: "workshop",
+    title: "Мастерская",
+    description: "Настоящие инструменты в обстановке, воссоздающей реальное рабочее место — навыки доводятся до автоматизма.",
+  },
+  {
+    icon: "software",
+    title: "Программный комплекс",
+    description: "3D-среда, где можно смоделировать даже редкие и опасные производственные ситуации.",
+  },
+  {
+    icon: "simulator",
+    title: "Тренажёр-симулятор",
+    description: "Органы управления, имитирующие рабочее место оператора спецтехники, — для отработки реальных сценариев.",
+  },
 ];
 
 export default function HomePage() {
@@ -133,7 +157,10 @@ export default function HomePage() {
           <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DIRECTIONS.map((direction) => (
               <div key={direction.title} className="rounded-xl border border-line bg-bg-page p-6">
-                <h3 className="font-bold">{direction.title}</h3>
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
+                  <FormatIcon icon={direction.icon} className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 font-bold">{direction.title}</h3>
                 <p className="mt-2 text-sm text-fg-secondary">{direction.description}</p>
               </div>
             ))}

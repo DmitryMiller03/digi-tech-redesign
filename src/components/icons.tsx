@@ -97,6 +97,53 @@ export function CategoryIcon({ icon, ...props }: { icon: string } & IconProps) {
   return <Icon {...props} />;
 }
 
+const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
+  lab: (props) => (
+    <Base {...props}>
+      <path d="M9 3h6M10 3v6l-5 10a1.5 1.5 0 0 0 1.4 2h11.2a1.5 1.5 0 0 0 1.4-2l-5-10V3" />
+      <path d="M7.5 14h9" />
+    </Base>
+  ),
+  teaching: (props) => (
+    <Base {...props}>
+      <rect x="3" y="6" width="18" height="12" rx="1.5" />
+      <path d="M7 10v4M12 9v5M17 11v3" />
+    </Base>
+  ),
+  interactive: (props) => (
+    <Base {...props}>
+      <path d="M4 20 20 6" />
+      <rect x="9" y="3" width="10" height="14" rx="1" transform="rotate(20 14 10)" />
+    </Base>
+  ),
+  workshop: (props) => (
+    <Base {...props}>
+      <path d="M3 21V9l9-6 9 6v12" />
+      <path d="M9 21v-6h6v6M9 12h.01M15 12h.01" />
+    </Base>
+  ),
+  software: (props) => (
+    <Base {...props}>
+      <rect x="3" y="4" width="18" height="12" rx="1.5" />
+      <path d="M8 20h8M12 16v4" />
+      <path d="M9 8l3 2-3 2" />
+    </Base>
+  ),
+  simulator: (props) => (
+    <Base {...props}>
+      <rect x="3" y="4" width="18" height="11" rx="1.5" />
+      <path d="M7 20h10M9 15v5M15 15v5" />
+      <circle cx="12" cy="9" r="2" />
+    </Base>
+  ),
+};
+
+export function FormatIcon({ icon, ...props }: { icon: string } & IconProps) {
+  const Icon = FORMAT_ICONS[icon];
+  if (!Icon) return null;
+  return <Icon {...props} />;
+}
+
 export function ArrowRightIcon(props: IconProps) {
   return (
     <Base {...props}>
