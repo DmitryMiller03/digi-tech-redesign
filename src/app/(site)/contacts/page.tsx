@@ -46,6 +46,19 @@ export default function ContactsPage() {
                 внедрения первого модуля обычно проходит не больше одного рабочего дня.
               </p>
             </div>
+            <div>
+              <div className="label mb-1 text-accent-2">Для оформления закупки</div>
+              <a
+                href="/documents/rekvizity.pdf"
+                download
+                className="inline-flex items-center gap-2 text-fg-secondary hover:text-primary"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 shrink-0">
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                </svg>
+                Скачать реквизиты компании (PDF)
+              </a>
+            </div>
           </div>
         </Reveal>
 
