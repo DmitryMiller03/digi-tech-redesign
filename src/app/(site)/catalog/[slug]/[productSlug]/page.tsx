@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ProductImagePlaceholder } from "@/components/ui/ProductImagePlaceholder";
 import { GradientCta } from "@/components/ui/GradientCta";
+import { StickyMobileCta } from "@/components/ui/StickyMobileCta";
 import { VariantTabs } from "./VariantTabs";
 
 async function getProduct(categorySlug: string, productSlug: string) {
@@ -63,7 +64,8 @@ export default async function ProductPage({
   ];
 
   return (
-    <Container size="5xl" className="py-16">
+    <>
+    <Container size="5xl" className="pb-24 pt-16 lg:py-16">
       <nav className="text-sm text-fg-muted">
         <Link href="/catalog" className="hover:text-fg-primary">
           Каталог
@@ -172,5 +174,7 @@ export default async function ProductPage({
         </div>
       </div>
     </Container>
+    <StickyMobileCta label="Оставить заявку на демо" />
+    </>
   );
 }

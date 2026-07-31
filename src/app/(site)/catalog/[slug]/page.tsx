@@ -10,6 +10,7 @@ import { CATEGORIES } from "@/lib/catalog-content";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { ProductImagePlaceholder } from "@/components/ui/ProductImagePlaceholder";
+import { StickyMobileCta } from "@/components/ui/StickyMobileCta";
 
 async function getCategory(slug: string) {
   return prisma.category.findUnique({
@@ -46,7 +47,8 @@ export default async function CategoryPage({
   const icon = CATEGORIES.find((c) => c.slug === slug)?.icon ?? "complex";
 
   return (
-    <Container className="py-16">
+    <>
+    <Container className="pb-24 pt-16 lg:py-16">
       <nav className="text-sm text-fg-muted">
         <Link href="/catalog" className="hover:text-fg-primary">
           Каталог
@@ -113,5 +115,7 @@ export default async function CategoryPage({
         </Reveal>
       )}
     </Container>
+    <StickyMobileCta label="Оставить заявку на подбор" />
+    </>
   );
 }
