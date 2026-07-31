@@ -6,6 +6,9 @@ import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { HeroVideo } from "@/components/home/HeroVideo";
 import { PinnedStats } from "@/components/motion/PinnedStats";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 const STEPS = [
   {
@@ -64,7 +67,7 @@ export default function HomePage() {
       <HeroVideo />
 
       <section className="border-b border-line py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <PinnedStats
             className="flex flex-wrap justify-center gap-x-16 gap-y-6 text-center sm:justify-between sm:text-left"
             stats={[
@@ -73,11 +76,11 @@ export default function HomePage() {
               { value: 120, suffix: "+", label: "колледжей" },
             ]}
           />
-        </div>
+        </Container>
       </section>
 
       <section id="how-it-works" className="border-t border-line bg-bg-surface/50 py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="label text-accent-2">Как это работает</span>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
@@ -91,23 +94,20 @@ export default function HomePage() {
 
           <StaggerGroup className="mt-14 grid gap-6 sm:grid-cols-3">
             {STEPS.map((step) => (
-              <div
-                key={step.number}
-                className="rounded-xl border border-line bg-bg-page p-7 shadow-sm"
-              >
+              <Card key={step.number} padding="lg" className="shadow-sm">
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent">
                   {step.number}
                 </span>
                 <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
                 <p className="mt-2 text-sm text-fg-secondary">{step.description}</p>
-              </div>
+              </Card>
             ))}
           </StaggerGroup>
-        </div>
+        </Container>
       </section>
 
       <section className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <Reveal className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="label text-accent-2">Каталог</span>
@@ -126,11 +126,7 @@ export default function HomePage() {
 
           <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {CATEGORIES.map((category) => (
-              <Link
-                key={category.slug}
-                href={`/catalog/${category.slug}`}
-                className="group rounded-xl border border-line bg-bg-page p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-lg"
-              >
+              <Card key={category.slug} as={Link} href={`/catalog/${category.slug}`} interactive>
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
                   <CategoryIcon icon={category.icon} className="h-6 w-6" />
                 </div>
@@ -139,14 +135,14 @@ export default function HomePage() {
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
                   Подробнее <ArrowRightIcon className="h-3.5 w-3.5" />
                 </span>
-              </Link>
+              </Card>
             ))}
           </StaggerGroup>
-        </div>
+        </Container>
       </section>
 
       <section className="border-t border-line bg-bg-surface/50 py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="label text-accent-2">Форматы</span>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
@@ -156,20 +152,20 @@ export default function HomePage() {
 
           <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {DIRECTIONS.map((direction) => (
-              <div key={direction.title} className="rounded-xl border border-line bg-bg-page p-6">
+              <Card key={direction.title}>
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
                   <FormatIcon icon={direction.icon} className="h-6 w-6" />
                 </div>
                 <h3 className="mt-4 font-bold">{direction.title}</h3>
                 <p className="mt-2 text-sm text-fg-secondary">{direction.description}</p>
-              </div>
+              </Card>
             ))}
           </StaggerGroup>
-        </div>
+        </Container>
       </section>
 
       <section className="py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <Container size="5xl">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-accent px-8 py-16 text-center shadow-lg sm:px-16">
               <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
@@ -180,17 +176,13 @@ export default function HomePage() {
                 одного рабочего дня.
               </p>
               <MagneticButton className="mt-8">
-                <Link
-                  href="/contacts"
-                  className="group inline-flex items-center gap-2 rounded-pill bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-md"
-                >
+                <Button href="/contacts" variant="inverted" arrow className="shadow-md">
                   Запросить демо
-                  <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                </Button>
               </MagneticButton>
             </div>
           </Reveal>
-        </div>
+        </Container>
       </section>
     </>
   );

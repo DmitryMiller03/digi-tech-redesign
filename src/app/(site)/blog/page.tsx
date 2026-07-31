@@ -3,6 +3,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
   title: "Блог — Digi Tech",
@@ -16,7 +18,7 @@ export default async function BlogPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container className="py-16">
       <Reveal>
         <span className="label text-accent-2">Блог</span>
         <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -27,11 +29,7 @@ export default async function BlogPage() {
       {posts.length > 0 ? (
         <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className="group rounded-xl border border-line bg-bg-page p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-lg"
-            >
+            <Card key={post.id} as={Link} href={`/blog/${post.slug}`} interactive>
               <h2 className="font-bold leading-snug">{post.title}</h2>
               {post.excerpt && <p className="mt-2 text-sm text-fg-secondary">{post.excerpt}</p>}
               {post.publishedAt && (
@@ -39,7 +37,7 @@ export default async function BlogPage() {
                   {new Intl.DateTimeFormat("ru-RU", { dateStyle: "long" }).format(post.publishedAt)}
                 </p>
               )}
-            </Link>
+            </Card>
           ))}
         </StaggerGroup>
       ) : (
@@ -47,6 +45,6 @@ export default async function BlogPage() {
           Первые статьи скоро появятся здесь.
         </Reveal>
       )}
-    </div>
+    </Container>
   );
 }

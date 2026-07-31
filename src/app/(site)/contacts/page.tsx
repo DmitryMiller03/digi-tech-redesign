@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
+import { Container } from "@/components/ui/Container";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ContactsPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container size="5xl" className="py-16">
       <Reveal>
         <span className="label text-accent-2">Контакты</span>
         <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -66,6 +67,6 @@ export default function ContactsPage() {
           <ContactForm />
         </Reveal>
       </div>
-    </div>
+    </Container>
   );
 }

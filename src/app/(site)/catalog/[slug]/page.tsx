@@ -6,6 +6,8 @@ import { CategoryIcon, ArrowRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { CATEGORIES } from "@/lib/catalog-content";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
 
 async function getCategory(slug: string) {
   return prisma.category.findUnique({
@@ -42,7 +44,7 @@ export default async function CategoryPage({
   const icon = CATEGORIES.find((c) => c.slug === slug)?.icon ?? "complex";
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container className="py-16">
       <nav className="text-sm text-fg-muted">
         <Link href="/catalog" className="hover:text-fg-primary">
           Каталог
@@ -64,11 +66,7 @@ export default async function CategoryPage({
       {category.products.length > 0 ? (
         <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {category.products.map((product) => (
-            <Link
-              key={product.id}
-              href={`/catalog/${category.slug}/${product.slug}`}
-              className="group rounded-xl border border-line bg-bg-page p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-lg"
-            >
+            <Card key={product.id} as={Link} href={`/catalog/${category.slug}/${product.slug}`} interactive>
               <h2 className="font-bold leading-snug">{product.name}</h2>
               {product.shortDescription && (
                 <p className="mt-2 text-sm text-fg-secondary">{product.shortDescription}</p>
@@ -76,7 +74,7 @@ export default async function CategoryPage({
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
                 Подробнее <ArrowRightIcon className="h-3.5 w-3.5" />
               </span>
-            </Link>
+            </Card>
           ))}
         </StaggerGroup>
       ) : (
@@ -90,6 +88,6 @@ export default async function CategoryPage({
           </div>
         </Reveal>
       )}
-    </div>
+    </Container>
   );
 }

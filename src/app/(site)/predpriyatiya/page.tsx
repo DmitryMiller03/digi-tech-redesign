@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { ArrowRightIcon } from "@/components/icons";
 import { ProcurementSupport } from "@/components/ProcurementSupport";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Предприятиям — Digi Tech",
@@ -40,7 +41,7 @@ const STEPS = [
 
 export default function PredpriyatiyaPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container className="py-16">
       <Reveal>
         <span className="label text-accent-2">Предприятия</span>
         <h1 className="mt-3 max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -58,10 +59,10 @@ export default function PredpriyatiyaPage() {
         </Reveal>
         <StaggerGroup className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {ADVANTAGES.map((item) => (
-            <div key={item.title} className="rounded-xl border border-line bg-bg-surface p-5">
+            <Card key={item.title} padding="sm" className="bg-bg-surface">
               <h3 className="font-bold leading-snug">{item.title}</h3>
               <p className="mt-2 text-sm text-fg-secondary">{item.description}</p>
-            </div>
+            </Card>
           ))}
         </StaggerGroup>
       </div>
@@ -72,13 +73,13 @@ export default function PredpriyatiyaPage() {
         </Reveal>
         <StaggerGroup className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, index) => (
-            <div key={step.title} className="rounded-xl border border-line bg-bg-page p-5 shadow-sm">
+            <Card key={step.title} padding="sm" className="shadow-sm">
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-2xl font-extrabold text-transparent">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-3 font-bold leading-snug">{step.title}</h3>
               <p className="mt-2 text-sm text-fg-secondary">{step.description}</p>
-            </div>
+            </Card>
           ))}
         </StaggerGroup>
       </div>
@@ -95,15 +96,11 @@ export default function PredpriyatiyaPage() {
           Расскажем, какие тренажёры подойдут под ваши производственные процессы.
         </p>
         <MagneticButton className="mt-6">
-          <Link
-            href="/contacts"
-            className="group inline-flex items-center gap-2 rounded-pill bg-white px-6 py-3.5 text-sm font-semibold text-primary"
-          >
+          <Button href="/contacts" variant="inverted" arrow>
             Связаться с нами
-            <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </Button>
         </MagneticButton>
       </Reveal>
-    </div>
+    </Container>
   );
 }

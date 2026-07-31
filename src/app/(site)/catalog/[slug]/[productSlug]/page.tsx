@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/motion/Reveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { ArrowRightIcon } from "@/components/icons";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { VariantTabs } from "./VariantTabs";
 
 async function getProduct(categorySlug: string, productSlug: string) {
@@ -58,7 +60,7 @@ export default async function ProductPage({
   ];
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container size="5xl" className="py-16">
       <nav className="text-sm text-fg-muted">
         <Link href="/catalog" className="hover:text-fg-primary">
           Каталог
@@ -119,16 +121,18 @@ export default async function ProductPage({
 
         <div className="space-y-6">
           {specs && Object.keys(specs).length > 0 && (
-            <Reveal className="rounded-xl border border-line bg-bg-surface p-6">
-              <h2 className="label mb-4 text-accent-2">Характеристики</h2>
-              <dl className="space-y-3 text-sm">
-                {Object.entries(specs).map(([key, value]) => (
-                  <div key={key} className="flex justify-between gap-4 border-b border-line pb-2">
-                    <dt className="text-fg-muted">{key}</dt>
-                    <dd className="text-right font-semibold">{value}</dd>
-                  </div>
-                ))}
-              </dl>
+            <Reveal>
+              <Card className="bg-bg-surface">
+                <h2 className="label mb-4 text-accent-2">Характеристики</h2>
+                <dl className="space-y-3 text-sm">
+                  {Object.entries(specs).map(([key, value]) => (
+                    <div key={key} className="flex justify-between gap-4 border-b border-line pb-2">
+                      <dt className="text-fg-muted">{key}</dt>
+                      <dd className="text-right font-semibold">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Card>
             </Reveal>
           )}
 
@@ -139,18 +143,14 @@ export default async function ProductPage({
                 Покажем в формате видеозвонка и ответим на вопросы по внедрению.
               </p>
               <MagneticButton className="mt-4">
-                <Link
-                  href="/contacts"
-                  className="group inline-flex items-center gap-2 rounded-pill bg-white px-5 py-3 text-sm font-semibold text-primary"
-                >
+                <Button href="/contacts" variant="inverted" arrow>
                   Оставить заявку
-                  <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                </Button>
               </MagneticButton>
             </div>
           </Reveal>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { PinnedStats } from "@/components/motion/PinnedStats";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { ArrowRightIcon } from "@/components/icons";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "О компании — Digi Tech",
@@ -29,7 +30,7 @@ const VALUES = [
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container className="py-16">
       <Reveal>
         <span className="label text-accent-2">О компании</span>
         <h1 className="mt-3 max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -57,10 +58,10 @@ export default function AboutPage() {
         </Reveal>
         <StaggerGroup className="mt-8 grid gap-6 sm:grid-cols-3">
           {VALUES.map((value) => (
-            <div key={value.title} className="rounded-xl border border-line bg-bg-surface p-6">
+            <Card key={value.title} className="bg-bg-surface">
               <h3 className="font-bold">{value.title}</h3>
               <p className="mt-2 text-sm text-fg-secondary">{value.description}</p>
-            </div>
+            </Card>
           ))}
         </StaggerGroup>
       </div>
@@ -70,15 +71,11 @@ export default function AboutPage() {
           Хотите узнать больше о наших модулях?
         </h2>
         <MagneticButton className="mt-6">
-          <Link
-            href="/contacts"
-            className="group inline-flex items-center gap-2 rounded-pill bg-white px-6 py-3.5 text-sm font-semibold text-primary"
-          >
+          <Button href="/contacts" variant="inverted" arrow>
             Связаться с нами
-            <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </Button>
         </MagneticButton>
       </Reveal>
-    </div>
+    </Container>
   );
 }

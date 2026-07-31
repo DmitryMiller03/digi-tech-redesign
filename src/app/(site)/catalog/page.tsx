@@ -5,6 +5,8 @@ import { CategoryIcon, ArrowRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { CATEGORIES } from "@/lib/catalog-content";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
   title: "Каталог виртуальных тренажёров — Digi Tech",
@@ -21,7 +23,7 @@ export default async function CatalogPage() {
   const iconBySlug = new Map(CATEGORIES.map((c) => [c.slug, c.icon]));
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <Container className="py-16">
       <Reveal>
         <span className="label text-accent-2">Каталог</span>
         <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -35,11 +37,7 @@ export default async function CatalogPage() {
 
       <StaggerGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((category) => (
-          <Link
-            key={category.id}
-            href={`/catalog/${category.slug}`}
-            className="group rounded-xl border border-line bg-bg-page p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-line-strong hover:shadow-lg"
-          >
+          <Card key={category.id} as={Link} href={`/catalog/${category.slug}`} interactive>
             <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
               <CategoryIcon icon={iconBySlug.get(category.slug) ?? "complex"} className="h-6 w-6" />
             </div>
@@ -51,9 +49,9 @@ export default async function CatalogPage() {
                 Подробнее <ArrowRightIcon className="h-3.5 w-3.5" />
               </span>
             </div>
-          </Link>
+          </Card>
         ))}
       </StaggerGroup>
-    </div>
+    </Container>
   );
 }
