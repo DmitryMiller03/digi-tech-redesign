@@ -5,7 +5,6 @@ import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/motion/Reveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { ArrowRightIcon } from "@/components/icons";
-import { AddToCartButton } from "./AddToCartButton";
 import { VariantTabs } from "./VariantTabs";
 
 async function getProduct(categorySlug: string, productSlug: string) {
@@ -90,13 +89,6 @@ export default async function ProductPage({
           <span className="text-xl font-bold">
             {product.price !== null ? formatPrice(product.price) : "Цена по запросу"}
           </span>
-          <AddToCartButton
-            productId={product.id}
-            slug={product.slug}
-            categorySlug={product.category.slug}
-            name={product.name}
-            price={product.price}
-          />
         </div>
       </Reveal>
 

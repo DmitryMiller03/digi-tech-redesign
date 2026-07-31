@@ -6,7 +6,6 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MenuIcon, CloseIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
-import { CartIcon } from "@/components/layout/CartIcon";
 import { AudienceDropdown } from "@/components/layout/AudienceDropdown";
 
 const NAV_LINKS = [
@@ -83,7 +82,6 @@ export function Header() {
           >
             Оставить заявку
           </Link>
-          <CartIcon />
           <ThemeToggle />
           <button
             type="button"
