@@ -101,11 +101,19 @@
   --radius-pill: 999px;
 }
 
-* {
-  transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease;
+/* Layered (not left bare) so Tailwind's utilities layer — which loads
+   after @layer base — can still win when a component sets its own
+   transition-property/duration (e.g. Header's transform+opacity
+   reveal). Left unlayered, this unconditionally overrides every
+   transition-* utility site-wide regardless of specificity, since
+   unlayered CSS always beats layered CSS. */
+@layer base {
+  * {
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease;
+  }
 }
 
 html,
