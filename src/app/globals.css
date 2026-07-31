@@ -178,6 +178,56 @@ body {
   }
 }
 
+/* Scan-line hover accent for product cards with a real screenshot — a
+   thin brand-gradient bar that sweeps across the image once per hover
+   entry (not a looping effect: the animation is gated on `.group:hover`,
+   so it plays through and stops until the cursor leaves and re-enters).
+   Only ever wired up on cards that have an actual product photo — never
+   on icon-only tiles (categories/formats/steps). */
+.scan-line {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scan-line::before {
+  content: "";
+  position: absolute;
+  inset: -20% -30%;
+  width: 20%;
+  background: linear-gradient(100deg, transparent, var(--primary), var(--accent), transparent);
+  opacity: 0;
+  transform: translateX(-60%) skewX(-15deg);
+}
+
+.group:hover .scan-line::before {
+  animation: scan-sweep 650ms ease-out;
+}
+
+@keyframes scan-sweep {
+  0% {
+    transform: translateX(-60%) skewX(-15deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(650%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-line::before {
+    display: none;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;

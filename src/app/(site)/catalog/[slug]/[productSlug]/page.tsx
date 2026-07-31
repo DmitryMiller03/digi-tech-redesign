@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -7,6 +8,7 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { ProductImagePlaceholder } from "@/components/ui/ProductImagePlaceholder";
 import { VariantTabs } from "./VariantTabs";
 
 async function getProduct(categorySlug: string, productSlug: string) {
@@ -91,6 +93,23 @@ export default async function ProductPage({
           <span className="text-xl font-bold">
             {product.price !== null ? formatPrice(product.price) : "Цена по запросу"}
           </span>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.15}>
+        <div className="relative mt-8 aspect-video overflow-hidden rounded-xl border border-line">
+          {product.images[0] ? (
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              fill
+              sizes="(min-width: 1024px) 800px, 100vw"
+              className="object-cover"
+              priority
+            />
+          ) : (
+            <ProductImagePlaceholder className="absolute inset-0" />
+          )}
         </div>
       </Reveal>
 
