@@ -94,8 +94,8 @@ export default async function ProductPage({
         </div>
       </Reveal>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-3">
-        <div className="space-y-8 lg:col-span-2">
+      <div className="mt-10 grid gap-10 md:grid-cols-3">
+        <div className="space-y-8 md:col-span-2">
           {product.description && (
             <Reveal>
               <div className="whitespace-pre-line leading-relaxed text-fg-secondary">

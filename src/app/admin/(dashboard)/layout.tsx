@@ -14,8 +14,8 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   const session = await auth();
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
-      <aside className="w-60 shrink-0 border-r border-slate-200 bg-white px-4 py-6">
+    <div className="flex min-h-screen flex-col bg-slate-50 lg:flex-row">
+      <aside className="hidden w-60 shrink-0 border-r border-slate-200 bg-white px-4 py-6 lg:block">
         <div className="px-2 text-lg font-semibold text-slate-900">Digi-Tech</div>
         <nav className="mt-8 space-y-1">
           {NAV_ITEMS.map((item) => (
@@ -29,6 +29,18 @@ export default async function DashboardLayout({ children }: { children: ReactNod
           ))}
         </nav>
       </aside>
+
+      <nav className="flex gap-1 overflow-x-auto border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
+        {NAV_ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </nav>
 
       <div className="flex flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
