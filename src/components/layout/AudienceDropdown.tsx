@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 const AUDIENCE_LINKS = [
@@ -13,6 +13,7 @@ const AUDIENCE_LINKS = [
 export function AudienceDropdown() {
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   function scheduleClose() {
     closeTimer.current = setTimeout(() => setOpen(false), 150);
@@ -22,8 +23,29 @@ export function AudienceDropdown() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }
 
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    function onClickOutside(e: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", onClickOutside);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onClickOutside);
+    };
+  }, [open]);
+
   return (
     <div
+      ref={rootRef}
       className="relative"
       onMouseEnter={() => {
         cancelClose();
@@ -33,6 +55,8 @@ export function AudienceDropdown() {
     >
       <button
         type="button"
+        aria-haspopup="true"
+        aria-expanded={open}
         className="flex items-center gap-1 text-sm font-medium text-fg-secondary transition-colors hover:text-fg-primary"
         onClick={() => setOpen((v) => !v)}
       >

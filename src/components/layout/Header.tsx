@@ -102,7 +102,9 @@ export function Header() {
           <ThemeToggle />
           <button
             type="button"
-            aria-label="Открыть меню"
+            aria-label={open ? "Закрыть меню" : "Открыть меню"}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
             className="grid h-9 w-9 place-items-center rounded-lg border border-line lg:hidden"
             onClick={() => setOpen((v) => !v)}
           >
@@ -112,7 +114,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-line px-4 py-4 lg:hidden">
+        <nav id="mobile-nav" className="border-t border-line px-4 py-4 lg:hidden">
           <div className="flex flex-col gap-1">
             <Link
               href="/catalog"
