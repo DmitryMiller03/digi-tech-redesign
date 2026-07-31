@@ -35,7 +35,16 @@ export function Header() {
     // every other page skips straight to the direction-aware behavior
     // below (hide on scroll down, show on scroll up or near the top).
     let introDone = !isHome;
-    let lastY = window.scrollY;
+    // Anchor is the scroll position where we last committed to a
+    // direction. Requiring some net movement past it before flipping
+    // again (instead of reacting to every single scroll tick) avoids a
+    // flicker right after the home-page intro reveal: without it, the
+    // same continuous downward scroll that crosses the 40px intro
+    // threshold immediately continues past it and re-hides the header
+    // a tick later, which reads as a jarring flash rather than a
+    // smooth appearance.
+    const HYSTERESIS = 24;
+    let anchorY = window.scrollY;
 
     const onScroll = () => {
       const y = window.scrollY;
@@ -44,18 +53,22 @@ export function Header() {
         if (y > 40) {
           introDone = true;
           setRevealed(true);
+          anchorY = y;
         }
-        lastY = y;
         return;
       }
 
-      if (y <= 80 || y < lastY) {
+      if (y <= 80) {
         setRevealed(true);
-      } else if (y > lastY) {
+        anchorY = y;
+      } else if (y - anchorY > HYSTERESIS) {
         setRevealed(false);
         setOpen(false);
+        anchorY = y;
+      } else if (anchorY - y > HYSTERESIS) {
+        setRevealed(true);
+        anchorY = y;
       }
-      lastY = y;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -64,7 +77,7 @@ export function Header() {
 
   return (
     <header
-      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b border-line bg-bg-page/80 backdrop-blur-md transition-all duration-300 ease-out ${
+      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b border-line bg-bg-page/80 backdrop-blur-md transition-all duration-[350ms] ease-in-out ${
         revealed ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
       }`}
     >
