@@ -6,6 +6,7 @@ import { ProcurementSupport } from "@/components/ProcurementSupport";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { GradientCta } from "@/components/ui/GradientCta";
 
 export const metadata: Metadata = {
   title: "Техникумам и колледжам — Digi Tech",
@@ -87,18 +88,20 @@ export default function SsuzyPage() {
         <ProcurementSupport />
       </Reveal>
 
-      <Reveal className="mt-16 rounded-2xl bg-gradient-to-br from-primary to-accent p-8 text-center text-white sm:p-14">
-        <h2 className="text-2xl font-extrabold sm:text-3xl">
-          Готовы внедрить VR-обучение в вашем колледже?
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-white/90">
-          Оставьте заявку — покажем демо-версию под ваши специальности в течение одного рабочего дня.
-        </p>
-        <MagneticButton className="mt-6">
-          <Button href="/contacts" variant="inverted" arrow>
-            Запросить демо
-          </Button>
-        </MagneticButton>
+      <Reveal className="mt-16">
+        <GradientCta className="p-8 text-center sm:p-14">
+          <h2 className="text-2xl font-extrabold sm:text-3xl">
+            Готовы внедрить VR-обучение в вашем колледже?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-white/90">
+            Оставьте заявку — покажем демо-версию под ваши специальности в течение одного рабочего дня.
+          </p>
+          <MagneticButton className="mt-6">
+            <Button href="/contacts" variant="inverted" arrow>
+              Запросить демо
+            </Button>
+          </MagneticButton>
+        </GradientCta>
       </Reveal>
     </Container>
   );
