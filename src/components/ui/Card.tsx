@@ -3,12 +3,13 @@ import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
 type CardProps<T extends ElementType> = {
   as?: T;
   interactive?: boolean;
-  padding?: "sm" | "md" | "lg";
+  padding?: "none" | "sm" | "md" | "lg";
   className?: string;
   children: ReactNode;
 } & Omit<ComponentPropsWithoutRef<T>, "as" | "className" | "children">;
 
 const PADDING = {
+  none: "",
   sm: "p-5",
   md: "p-6",
   lg: "p-7",
@@ -31,7 +32,7 @@ export function Card<T extends ElementType = "div">({
 
   return (
     <Tag
-      className={`rounded-xl border border-line bg-bg-page ${PADDING[padding]} ${
+      className={`overflow-hidden rounded-xl border border-line bg-bg-page ${PADDING[padding]} ${
         interactive
           ? "group shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-lg"
           : ""
