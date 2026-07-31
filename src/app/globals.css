@@ -25,6 +25,12 @@
   --shadow-md: 0 8px 24px rgba(20, 20, 20, 0.08);
   --shadow-lg: 0 20px 48px rgba(20, 20, 20, 0.14);
 
+  /* Third surface step — for cards/dropdowns that should visually sit
+     above --bg-surface (which itself sits above --bg-page). */
+  --surface-elevated: #ffffff;
+  --border-active: rgba(30, 111, 238, 0.35);
+  --focus-ring: var(--primary);
+
   color-scheme: light;
 }
 
@@ -53,6 +59,13 @@
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.5);
 
+  /* A third, distinguishable step above --bg-page (#0d1117) and
+     --bg-surface (#161c27) — dropdowns/elevated cards were blending
+     into the surfaces beneath them without this. */
+  --surface-elevated: #1c2635;
+  --border-active: rgba(45, 139, 255, 0.4);
+  --focus-ring: var(--primary);
+
   color-scheme: dark;
 }
 
@@ -65,6 +78,7 @@
   --color-bg-page: var(--bg-page);
   --color-bg-surface: var(--bg-surface);
   --color-bg-surface-hover: var(--bg-surface-hover);
+  --color-surface-elevated: var(--surface-elevated);
 
   --color-fg-primary: var(--fg-primary);
   --color-fg-secondary: var(--fg-secondary);
@@ -73,6 +87,8 @@
 
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-border-active: var(--border-active);
+  --color-focus-ring: var(--focus-ring);
 
   --font-sans: var(--font-montserrat);
 }
@@ -109,4 +125,9 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-muted);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
