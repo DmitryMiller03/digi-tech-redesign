@@ -135,6 +135,49 @@ body {
   color: var(--fg-muted);
 }
 
+/* Marquee (running text band) — pure CSS loop, see Marquee.tsx. The
+   track is rendered twice by the component; animating exactly -50% of
+   its own width makes the loop seamless. */
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 32s) linear infinite;
+}
+
+.marquee-track.marquee-reverse {
+  animation-direction: reverse;
+}
+
+.marquee-item {
+  font-size: clamp(1.1rem, 3.4vw, 2.75rem);
+}
+
+.marquee-item-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fg-muted);
+}
+
+.marquee-dot {
+  color: var(--fg-muted);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .marquee-track > *:nth-child(2) {
+    display: none;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
