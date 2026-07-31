@@ -26,37 +26,31 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const [revealed, setRevealed] = useState(!isHome);
+  const [revealed, setRevealed] = useState(true);
+  // On every page but the home one, the header always has its solid
+  // background. On the home page it starts fully transparent over the
+  // hero video (just the logo/nav floating) and only picks up the
+  // background/blur once scrolled past the hero-intro threshold.
+  const [solid, setSolid] = useState(!isHome);
 
   useEffect(() => {
-    setRevealed(!isHome);
-    // On the home page the header starts hidden over the hero video and
-    // only appears once the visitor scrolls past the intro threshold;
-    // every other page skips straight to the direction-aware behavior
-    // below (hide on scroll down, show on scroll up or near the top).
-    let introDone = !isHome;
+    setRevealed(true);
+    setSolid(!isHome);
+
     // Anchor is the scroll position where we last committed to a
     // direction. Requiring some net movement past it before flipping
     // again (instead of reacting to every single scroll tick) avoids a
-    // flicker right after the home-page intro reveal: without it, the
-    // same continuous downward scroll that crosses the 40px intro
-    // threshold immediately continues past it and re-hides the header
-    // a tick later, which reads as a jarring flash rather than a
-    // smooth appearance.
+    // flicker: without it, a single continuous downward scroll that
+    // crosses the "always show near top" threshold would immediately
+    // continue past it and re-hide the header a tick later, which
+    // reads as a jarring flash rather than a smooth appearance.
     const HYSTERESIS = 24;
     let anchorY = window.scrollY;
 
     const onScroll = () => {
       const y = window.scrollY;
 
-      if (!introDone) {
-        if (y > 40) {
-          introDone = true;
-          setRevealed(true);
-          anchorY = y;
-        }
-        return;
-      }
+      if (isHome) setSolid(y > 40);
 
       if (y <= 80) {
         setRevealed(true);
@@ -75,11 +69,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
+  const navLinkClass = `text-sm font-medium transition-colors ${
+    solid ? "text-fg-secondary hover:text-fg-primary" : "text-white/90 hover:text-white"
+  }`;
+
   return (
     <header
-      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b border-line bg-bg-page/80 backdrop-blur-md transition-all duration-[350ms] ease-in-out ${
-        revealed ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
-      }`}
+      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b transition-all duration-[350ms] ease-in-out ${
+        solid ? "border-line bg-bg-page/80 backdrop-blur-md" : "border-transparent"
+      } ${revealed ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"}`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" aria-label="Digi Tech">
@@ -87,19 +85,12 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
-          <Link
-            href="/catalog"
-            className="text-sm font-medium text-fg-secondary transition-colors hover:text-fg-primary"
-          >
+          <Link href="/catalog" className={navLinkClass}>
             Каталог
           </Link>
-          <AudienceDropdown />
+          <AudienceDropdown light={!solid} />
           {NAV_LINKS.slice(1).map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-fg-secondary transition-colors hover:text-fg-primary"
-            >
+            <Link key={link.href} href={link.href} className={navLinkClass}>
               {link.label}
             </Link>
           ))}
@@ -118,7 +109,9 @@ export function Header() {
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="grid h-9 w-9 place-items-center rounded-lg border border-line lg:hidden"
+            className={`grid h-9 w-9 place-items-center rounded-lg border transition-colors lg:hidden ${
+              solid ? "border-line text-fg-primary" : "border-white/30 text-white"
+            }`}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
@@ -127,7 +120,10 @@ export function Header() {
       </div>
 
       {open && (
-        <nav id="mobile-nav" className="border-t border-line px-4 py-4 lg:hidden">
+        <nav
+          id="mobile-nav"
+          className="border-t border-line bg-bg-page/95 px-4 py-4 backdrop-blur-md lg:hidden"
+        >
           <div className="flex flex-col gap-1">
             <Link
               href="/catalog"

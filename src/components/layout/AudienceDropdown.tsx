@@ -10,7 +10,7 @@ const AUDIENCE_LINKS = [
   { href: "/professionalism", label: "Профессионалитет" },
 ];
 
-export function AudienceDropdown() {
+export function AudienceDropdown({ light = false }: { light?: boolean }) {
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -57,7 +57,9 @@ export function AudienceDropdown() {
         type="button"
         aria-haspopup="true"
         aria-expanded={open}
-        className="flex items-center gap-1 text-sm font-medium text-fg-secondary transition-colors hover:text-fg-primary"
+        className={`flex items-center gap-1 text-sm font-medium transition-colors ${
+          light ? "text-white/90 hover:text-white" : "text-fg-secondary hover:text-fg-primary"
+        }`}
         onClick={() => setOpen((v) => !v)}
       >
         Клиентам
