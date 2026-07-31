@@ -29,25 +29,42 @@ export function Header() {
   const [revealed, setRevealed] = useState(!isHome);
 
   useEffect(() => {
-    if (!isHome) {
-      setRevealed(true);
-      return;
-    }
+    setRevealed(!isHome);
+    // On the home page the header starts hidden over the hero video and
+    // only appears once the visitor scrolls past the intro threshold;
+    // every other page skips straight to the direction-aware behavior
+    // below (hide on scroll down, show on scroll up or near the top).
+    let introDone = !isHome;
+    let lastY = window.scrollY;
 
-    setRevealed(false);
     const onScroll = () => {
-      if (window.scrollY > 40) {
-        setRevealed(true);
-        window.removeEventListener("scroll", onScroll);
+      const y = window.scrollY;
+
+      if (!introDone) {
+        if (y > 40) {
+          introDone = true;
+          setRevealed(true);
+        }
+        lastY = y;
+        return;
       }
+
+      if (y <= 80 || y < lastY) {
+        setRevealed(true);
+      } else if (y > lastY) {
+        setRevealed(false);
+        setOpen(false);
+      }
+      lastY = y;
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
   return (
     <header
-      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b border-line bg-bg-page/80 backdrop-blur-md transition-all duration-500 ${
+      className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-50 border-b border-line bg-bg-page/80 backdrop-blur-md transition-all duration-300 ease-out ${
         revealed ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
       }`}
     >
@@ -78,7 +95,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             href="/contacts"
-            className="hidden rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.03] sm:block"
+            className="hidden rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.03] lg:block"
           >
             Оставить заявку
           </Link>
