@@ -139,12 +139,23 @@ export function Header() {
         </div>
       </div>
 
-      {open && (
-        <nav
-          id="mobile-nav"
-          className="border-t border-line bg-bg-page/95 px-4 py-4 backdrop-blur-md lg:hidden"
-        >
-          <div className="flex flex-col gap-1">
+      {/* Always mounted (not `{open && ...}`) so the open/close transition
+          can animate — a plain conditional render has nothing to animate
+          between. grid-template-rows 0fr -> 1fr avoids the usual
+          max-height-guess jank: the row's height tracks the content's
+          real height throughout, not a hardcoded ceiling. */}
+      <nav
+        id="mobile-nav"
+        className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-in-out lg:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden border-t border-line bg-bg-page/95 backdrop-blur-md">
+          <div
+            className={`flex flex-col gap-1 px-4 py-4 transition-opacity duration-200 ${
+              open ? "opacity-100 delay-100" : "opacity-0"
+            }`}
+          >
             <Link
               href="/catalog"
               onClick={() => setOpen(false)}
@@ -184,8 +195,8 @@ export function Header() {
               Оставить заявку
             </Link>
           </div>
-        </nav>
-      )}
+        </div>
+      </nav>
     </header>
   );
 }
