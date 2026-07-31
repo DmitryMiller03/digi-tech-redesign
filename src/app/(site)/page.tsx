@@ -10,6 +10,7 @@ import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Marquee } from "@/components/motion/Marquee";
+import { StepsSection } from "@/components/home/StepsSection";
 
 function gradientWord(word: string) {
   return <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{word}</span>;
@@ -36,24 +37,6 @@ const INDUSTRIES_MARQUEE = [
   "Машиностроение",
   "Транспорт",
   "Сельское хозяйство",
-];
-
-const STEPS = [
-  {
-    number: "01",
-    title: "Колледж подключается",
-    description: "Выбираете нужные модули по специальностям и добавляете студентов группами.",
-  },
-  {
-    number: "02",
-    title: "Студенты изучают",
-    description: "В браузере или VR-шлеме исследуют 3D-модели, выполняют задания и проходят проверку знаний.",
-  },
-  {
-    number: "03",
-    title: "Преподаватель видит прогресс",
-    description: "Дашборд показывает успеваемость по каждому студенту и группе, с отчётами.",
-  },
 ];
 
 const DIRECTIONS = [
@@ -116,32 +99,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section id="how-it-works" className="border-t border-line bg-bg-surface/50 py-24">
-        <Container>
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="label text-accent-2">Как это работает</span>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Три шага до первого урока
-            </h2>
-            <p className="mt-4 text-fg-secondary">
-              Внедрение занимает от одного рабочего дня. Никаких сложных установок — всё
-              работает в браузере и VR-шлеме.
-            </p>
-          </Reveal>
-
-          <StaggerGroup className="mt-14 grid gap-6 sm:grid-cols-3">
-            {STEPS.map((step) => (
-              <Card key={step.number} padding="lg" className="shadow-sm">
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent">
-                  {step.number}
-                </span>
-                <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
-                <p className="mt-2 text-sm text-fg-secondary">{step.description}</p>
-              </Card>
-            ))}
-          </StaggerGroup>
-        </Container>
-      </section>
+      <StepsSection />
 
       <section className="py-24">
         <Container>
