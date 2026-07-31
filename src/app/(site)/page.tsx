@@ -9,6 +9,34 @@ import { PinnedStats } from "@/components/motion/PinnedStats";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Marquee } from "@/components/motion/Marquee";
+
+function gradientWord(word: string) {
+  return <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{word}</span>;
+}
+
+function outlineWord(word: string) {
+  return <span className="marquee-item-outline">{word}</span>;
+}
+
+const FORMATS_MARQUEE = [
+  gradientWord("VR-тренажёры"),
+  "Учебные стенды",
+  outlineWord("3D-атласы"),
+  "Симуляторы",
+  gradientWord("Лаборатории"),
+  "Мастерские под ключ",
+];
+
+const INDUSTRIES_MARQUEE = [
+  "Нефть и газ",
+  "Строительство",
+  "Энергетика",
+  "Металлургия",
+  "Машиностроение",
+  "Транспорт",
+  "Сельское хозяйство",
+];
 
 const STEPS = [
   {
@@ -65,6 +93,15 @@ export default function HomePage() {
   return (
     <>
       <HeroVideo />
+
+      <div className="flex h-[72px] items-center border-y border-line bg-bg-surface md:h-24">
+        <Marquee
+          items={FORMATS_MARQUEE}
+          direction="left"
+          speedSeconds={34}
+          ariaLabel="Форматы обучения: VR-тренажёры, учебные стенды, 3D-атласы, симуляторы, лаборатории, мастерские под ключ"
+        />
+      </div>
 
       <section className="border-b border-line py-16">
         <Container>
@@ -140,6 +177,17 @@ export default function HomePage() {
           </StaggerGroup>
         </Container>
       </section>
+
+      <div className="flex h-16 items-center overflow-hidden border-y border-line md:h-20">
+        <Marquee
+          items={INDUSTRIES_MARQUEE}
+          direction="right"
+          speedSeconds={52}
+          variant="outline"
+          decorative
+          pauseOnHover={false}
+        />
+      </div>
 
       <section className="border-t border-line bg-bg-surface/50 py-24">
         <Container>
