@@ -9,6 +9,7 @@ import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ProductImagePlaceholder } from "@/components/ui/ProductImagePlaceholder";
+import { GradientCta } from "@/components/ui/GradientCta";
 import { VariantTabs } from "./VariantTabs";
 
 async function getProduct(categorySlug: string, productSlug: string) {
@@ -156,7 +157,7 @@ export default async function ProductPage({
           )}
 
           <Reveal>
-            <div className="rounded-xl bg-gradient-to-br from-primary to-accent p-6 text-white">
+            <GradientCta className="p-6">
               <h2 className="font-bold">Хотите демо этого тренажёра?</h2>
               <p className="mt-2 text-sm text-white/90">
                 Покажем в формате видеозвонка и ответим на вопросы по внедрению.
@@ -166,7 +167,7 @@ export default async function ProductPage({
                   Оставить заявку
                 </Button>
               </MagneticButton>
-            </div>
+            </GradientCta>
           </Reveal>
         </div>
       </div>

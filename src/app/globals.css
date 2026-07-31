@@ -228,6 +228,34 @@ body {
   }
 }
 
+/* Animated brand-gradient CTA background — a slow pan, not a shimmer:
+   amplitude and speed are deliberately mild so it reads as "alive" without
+   pulling attention from the CTA's own text/button. */
+.gradient-cta-animated {
+  background-size: 200% 200%;
+  animation: gradient-pan 14s ease-in-out infinite;
+}
+
+.gradient-cta-animated:hover {
+  animation-duration: 7s;
+}
+
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-cta-animated {
+    animation: none;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;

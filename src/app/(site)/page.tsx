@@ -11,6 +11,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Marquee } from "@/components/motion/Marquee";
 import { StepsSection } from "@/components/home/StepsSection";
+import { GradientCta } from "@/components/ui/GradientCta";
 
 function gradientWord(word: string) {
   return <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{word}</span>;
@@ -173,7 +174,7 @@ export default function HomePage() {
       <section className="py-24">
         <Container size="5xl">
           <Reveal>
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-accent px-8 py-16 text-center shadow-lg sm:px-16">
+            <GradientCta className="px-8 py-16 text-center shadow-lg sm:px-16">
               <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
                 Готовы внедрить VR-обучение в вашем колледже?
               </h2>
@@ -186,7 +187,7 @@ export default function HomePage() {
                   Запросить демо
                 </Button>
               </MagneticButton>
-            </div>
+            </GradientCta>
           </Reveal>
         </Container>
       </section>

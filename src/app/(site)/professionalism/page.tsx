@@ -5,6 +5,7 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { GradientCta } from "@/components/ui/GradientCta";
 
 export const metadata: Metadata = {
   title: "Профессионалитет — Digi Tech",
@@ -52,18 +53,20 @@ export default function ProfessionalismPage() {
         </StaggerGroup>
       </div>
 
-      <Reveal className="mt-16 rounded-2xl bg-gradient-to-br from-primary to-accent p-8 text-center text-white sm:p-14">
-        <h2 className="text-2xl font-extrabold sm:text-3xl">
-          Готовите заявку на кластер «Профессионалитет»?
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-white/90">
-          Пришлём подборку тренажёров под ваши специальности и поможем с расчётом сметы.
-        </p>
-        <MagneticButton className="mt-6">
-          <Button href="/contacts" variant="inverted" arrow>
-            Обсудить кластер
-          </Button>
-        </MagneticButton>
+      <Reveal className="mt-16">
+        <GradientCta className="p-8 text-center sm:p-14">
+          <h2 className="text-2xl font-extrabold sm:text-3xl">
+            Готовите заявку на кластер «Профессионалитет»?
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-white/90">
+            Пришлём подборку тренажёров под ваши специальности и поможем с расчётом сметы.
+          </p>
+          <MagneticButton className="mt-6">
+            <Button href="/contacts" variant="inverted" arrow>
+              Обсудить кластер
+            </Button>
+          </MagneticButton>
+        </GradientCta>
       </Reveal>
     </Container>
   );
