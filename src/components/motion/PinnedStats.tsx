@@ -7,10 +7,11 @@ import { gsap } from "@/lib/gsap";
 export type Stat = { value: number; suffix: string; label: string };
 
 /**
- * Stats row that stays hidden on load and only reveals + counts up once the
- * user has actually scrolled a little (not just because the row happens to
- * already sit inside the initial viewport). No pin, no movement — the
- * numbers fade in exactly where they sit and count up in place.
+ * Stats row that stays hidden on load and only reveals once the user has
+ * actually scrolled a little (not just because the row happens to already
+ * sit inside the initial viewport). No pin, no movement — the numbers
+ * fade + sharpen into place exactly where they sit, already showing their
+ * real value.
  */
 export function PinnedStats({
   stats,
@@ -26,14 +27,15 @@ export function PinnedStats({
 
   useGSAP(
     () => {
+      // Counting up from zero reads as a slot-machine gimmick more than a
+      // confident B2B stat — the numbers just fade/sharpen into place,
+      // already showing their real value the instant they're legible.
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        numberRefs.current.forEach((el, i) => {
-          if (el) el.textContent = `${stats[i].value.toLocaleString("ru-RU")}${stats[i].suffix}`;
-        });
+        gsap.set(numberRefs.current, { autoAlpha: 1, y: 0, filter: "blur(0px)" });
         return;
       }
 
-      gsap.set(numberRefs.current, { autoAlpha: 0 });
+      gsap.set(numberRefs.current, { autoAlpha: 0, y: 10, filter: "blur(4px)" });
       let revealed = false;
 
       function tryReveal() {
@@ -46,31 +48,13 @@ export function PinnedStats({
         revealed = true;
         window.removeEventListener("scroll", tryReveal);
 
-        const tl = gsap.timeline();
-        tl.to(numberRefs.current, {
+        gsap.to(numberRefs.current, {
           autoAlpha: 1,
-          duration: 0.4,
-          stagger: 0.08,
-          ease: "power1.out",
-        });
-
-        stats.forEach((stat, i) => {
-          const proxy = { count: 0 };
-          const el = numberRefs.current[i];
-          tl.to(
-            proxy,
-            {
-              count: stat.value,
-              duration: 1,
-              ease: "power2.out",
-              onUpdate: () => {
-                if (el) {
-                  el.textContent = `${Math.round(proxy.count).toLocaleString("ru-RU")}${stat.suffix}`;
-                }
-              },
-            },
-            "<",
-          );
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
         });
       }
 
@@ -90,7 +74,8 @@ export function PinnedStats({
             }}
             className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent"
           >
-            0{stat.suffix}
+            {stat.value.toLocaleString("ru-RU")}
+            {stat.suffix}
           </dt>
           <dd className="mt-1 text-sm text-fg-muted">{stat.label}</dd>
         </div>
