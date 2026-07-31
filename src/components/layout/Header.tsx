@@ -50,8 +50,6 @@ export function Header() {
     const onScroll = () => {
       const y = window.scrollY;
 
-      if (isHome) setSolid(y > 40);
-
       if (y <= 80) {
         setRevealed(true);
         anchorY = y;
@@ -67,6 +65,28 @@ export function Header() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  useEffect(() => {
+    // The header stays transparent for as long as the hero itself is on
+    // screen — tied to the hero's actual height via IntersectionObserver
+    // rather than a fixed pixel threshold, so it works the same on a
+    // short laptop viewport and a tall desktop one. A sentinel at the
+    // very bottom edge of the (h-screen) hero section stands in for
+    // "has the visitor scrolled past the whole hero yet".
+    if (!isHome) return;
+
+    const sentinel = document.getElementById("hero-sentinel");
+    if (!sentinel) {
+      setSolid(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setSolid(!entry.isIntersecting);
+    });
+    observer.observe(sentinel);
+    return () => observer.disconnect();
   }, [isHome]);
 
   const navLinkClass = `text-sm font-medium transition-colors ${

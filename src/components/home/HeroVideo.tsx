@@ -70,6 +70,11 @@ export function HeroVideo() {
           </Reveal>
         </div>
       </div>
+
+      {/* Marks the bottom edge of the hero for Header's IntersectionObserver
+          — it keeps the header transparent for exactly as long as the hero
+          itself is on screen, instead of a fixed scroll-distance guess. */}
+      <div id="hero-sentinel" className="pointer-events-none absolute inset-x-0 bottom-0 h-px" />
     </section>
   );
 }
