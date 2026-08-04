@@ -69,7 +69,7 @@ export function AudienceDropdown({ light = false }: { light?: boolean }) {
       </button>
 
       {open && (
-        <div className="dropdown-panel-enter absolute left-1/2 top-full z-50 mt-3 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-xl border border-line bg-surface-elevated p-2 shadow-lg">
+        <div className="dropdown-panel-enter absolute left-1/2 top-full z-50 -ml-36 mt-3 w-72 max-w-[calc(100vw-2rem)] rounded-xl border border-line bg-surface-elevated p-2 shadow-lg">
           {AUDIENCE_LINKS.map((link) => (
             <Link
               key={link.href}

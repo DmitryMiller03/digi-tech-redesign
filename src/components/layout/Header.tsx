@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -26,25 +26,15 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  // On the home page the header stays fully hidden for as long as the
-  // hero video is the background — landing on the page, scrolling down
-  // within the hero, scrolling back up within the hero, all keep it
-  // hidden, so it can never sit on top of the hero heading. It only
-  // appears once the hero has fully scrolled past.
-  const [revealed, setRevealed] = useState(!isHome);
+  const [revealed, setRevealed] = useState(true);
   // On every page but the home one, the header always has its solid
   // background. On the home page it starts fully transparent over the
   // hero video (just the logo/nav floating) and only picks up the
   // background/blur once scrolled past the hero-intro threshold.
   const [solid, setSolid] = useState(!isHome);
-  // Read inside the scroll handler below without re-subscribing it every
-  // time `solid` flips — the effect that owns the listener only depends
-  // on `isHome`.
-  const solidRef = useRef(solid);
-  solidRef.current = solid;
 
   useEffect(() => {
-    setRevealed(!isHome);
+    setRevealed(true);
     setSolid(!isHome);
 
     // Anchor is the scroll position where we last committed to a
@@ -54,22 +44,18 @@ export function Header() {
     // crosses the "always show near top" threshold would immediately
     // continue past it and re-hide the header a tick later, which
     // reads as a jarring flash rather than a smooth appearance.
+    //
+    // The same 80px/24px thresholds also keep the header (over the hero
+    // video, on home) from ever reaching the hero heading: the heading
+    // sits vertically centered, well below where the header hides by —
+    // by the time scroll has moved it near the top, the header has
+    // already hidden itself, so a transparent header floating at the
+    // very top never overlaps it.
     const HYSTERESIS = 24;
     let anchorY = window.scrollY;
 
     const onScroll = () => {
       const y = window.scrollY;
-
-      // While still over the hero video (home page, not yet solid) the
-      // header stays hidden regardless of scroll direction — revealing
-      // it there, even on scroll-up, would sit it on top of the hero
-      // heading. It only starts reacting to scroll direction once solid,
-      // past the hero (branch below, unchanged).
-      if (!solidRef.current) {
-        setRevealed(false);
-        anchorY = y;
-        return;
-      }
 
       if (y <= 80) {
         setRevealed(true);
@@ -104,11 +90,7 @@ export function Header() {
     }
 
     const observer = new IntersectionObserver(([entry]) => {
-      const pastHero = !entry.isIntersecting;
-      setSolid(pastHero);
-      // Pop the header straight in the moment the hero clears, instead of
-      // waiting for the next scroll tick to notice.
-      setRevealed(pastHero);
+      setSolid(!entry.isIntersecting);
     });
     observer.observe(sentinel);
     return () => observer.disconnect();
