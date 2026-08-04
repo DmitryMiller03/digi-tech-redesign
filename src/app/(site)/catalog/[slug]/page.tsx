@@ -77,7 +77,7 @@ export default async function CategoryPage({
               interactive
               padding="none"
             >
-              <div className="scan-line-wrap relative aspect-video overflow-hidden">
+              <div className="relative aspect-video overflow-hidden">
                 {product.images[0] ? (
                   <Image
                     src={product.images[0]}
@@ -89,7 +89,6 @@ export default async function CategoryPage({
                 ) : (
                   <ProductImagePlaceholder className="absolute inset-0" />
                 )}
-                <span className="scan-line" aria-hidden="true" />
               </div>
               <div className="p-6">
                 <h2 className="font-bold leading-snug">{product.name}</h2>

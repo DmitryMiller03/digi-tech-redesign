@@ -36,10 +36,6 @@ export function ShowcaseSection({ items }: { items: ShowcaseItem[] }) {
           </p>
         </Reveal>
 
-        {/* A/B/C test, one hover treatment per card — pick a winner and
-            we'll make it the one true style everywhere: 0 = current
-            scan-line sweep, 1 = plain zoom only (no overlay), 2 = soft
-            radial glow fade-in. */}
         <StaggerGroup className="mt-10 grid gap-5 lg:grid-cols-3 lg:grid-rows-2">
           {items.map((item, i) => (
             <Link
@@ -57,8 +53,6 @@ export function ShowcaseSection({ items }: { items: ShowcaseItem[] }) {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
-              {i === 0 && <span className="scan-line" aria-hidden="true" />}
-              {i === 2 && <span className="card-glow" aria-hidden="true" />}
               <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                 <span className="text-xs font-semibold uppercase tracking-wide text-white/70">
                   {item.categoryName}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { CATEGORIES } from "@/lib/catalog-content";
 import { CategoryIcon, FormatIcon, ArrowRightIcon } from "@/components/icons";
+import { FORMATS } from "@/lib/format-content";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { MagneticButton } from "@/components/motion/MagneticButton";
@@ -58,47 +59,17 @@ const INDUSTRIES_MARQUEE = [
   "Сельское хозяйство",
 ];
 
-const DIRECTIONS = [
-  {
-    icon: "lab",
-    title: "Лабораторный стенд",
-    description: "Имитирует реальные технические системы — студенты отрабатывают навыки, не рискуя дорогостоящим оборудованием.",
-  },
-  {
-    icon: "teaching",
-    title: "Учебный стенд",
-    description: "Компактная модель оборудования: наглядно показывает устройство и принцип работы, от азов до сложных задач.",
-  },
-  {
-    icon: "interactive",
-    title: "Интерактивный стенд",
-    description: "Сочетает физику с цифрой — система сама анализирует действия студента и указывает на ошибки.",
-  },
-  {
-    icon: "workshop",
-    title: "Мастерская",
-    description: "Настоящие инструменты в обстановке, воссоздающей реальное рабочее место — навыки доводятся до автоматизма.",
-  },
-  {
-    icon: "software",
-    title: "Программный комплекс",
-    description: "3D-среда, где можно смоделировать даже редкие и опасные производственные ситуации.",
-  },
-  {
-    icon: "simulator",
-    title: "Тренажёр-симулятор",
-    description: "Органы управления, имитирующие рабочее место оператора спецтехники, — для отработки реальных сценариев.",
-  },
-];
-
-function FormatCard({ direction }: { direction: (typeof DIRECTIONS)[number] }) {
+function FormatCard({ format }: { format: (typeof FORMATS)[number] }) {
   return (
-    <Card className="h-full">
+    <Card as={Link} href={`/formats/${format.slug}`} interactive className="h-full">
       <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
-        <FormatIcon icon={direction.icon} className="h-6 w-6" />
+        <FormatIcon icon={format.icon} className="h-6 w-6" />
       </div>
-      <h3 className="mt-4 font-bold">{direction.title}</h3>
-      <p className="mt-2 text-sm text-fg-secondary">{direction.description}</p>
+      <h3 className="mt-4 font-bold">{format.title}</h3>
+      <p className="mt-2 text-sm text-fg-secondary">{format.summary}</p>
+      <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+        Подробнее <ArrowRightIcon className="h-3.5 w-3.5" />
+      </span>
     </Card>
   );
 }
@@ -220,7 +191,6 @@ export default async function HomePage() {
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <span className="scan-line" aria-hidden="true" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       <span className="text-xs font-semibold uppercase tracking-wide text-white/70">
                         {category.productCount} тренажёров
@@ -261,18 +231,7 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <div className="flex h-16 items-center overflow-hidden border-y border-line md:h-20">
-        <Marquee
-          items={INDUSTRIES_MARQUEE}
-          direction="right"
-          speedSeconds={52}
-          variant="muted"
-          decorative
-          pauseOnHover={false}
-        />
-      </div>
-
-      <section className="border-t border-line bg-bg-surface/50 py-24">
+      <section id="formats" className="border-t border-line bg-bg-surface/50 py-24">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="label text-accent-2">Форматы</span>
@@ -282,28 +241,33 @@ export default async function HomePage() {
           </Reveal>
         </Container>
 
-        {/* Two independently-scrolling rows (opposite directions, slow) —
-            hovering a row pauses only that row so the card underneath the
-            cursor can actually be read. Full-bleed, faded at the edges via
-            mask so cards visibly continue past the viewport instead of
-            hard-cutting. */}
-        <div
-          className="mt-14 space-y-5"
-          style={{
-            maskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
-            WebkitMaskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
-          }}
-        >
-          <CardMarquee ariaLabel="Форматы обучения, ряд 1" direction="left" speedSeconds={55}>
-            {DIRECTIONS.slice(0, 3).map((direction) => (
-              <FormatCard key={direction.title} direction={direction} />
-            ))}
-          </CardMarquee>
-          <CardMarquee ariaLabel="Форматы обучения, ряд 2" direction="right" speedSeconds={65}>
-            {DIRECTIONS.slice(3).map((direction) => (
-              <FormatCard key={direction.title} direction={direction} />
-            ))}
-          </CardMarquee>
+        {/* One continuous two-line scroll: industry keywords on top, format
+            cards below, both moving right at the same speed. Hovering a
+            format card pauses just that row so it can be clicked through to
+            its own page; the industries line is decorative and keeps going. */}
+        <div className="mt-14 space-y-5">
+          <div className="flex h-16 items-center overflow-hidden border-y border-line md:h-20">
+            <Marquee
+              items={INDUSTRIES_MARQUEE}
+              direction="right"
+              speedSeconds={52}
+              variant="muted"
+              decorative
+              pauseOnHover={false}
+            />
+          </div>
+          <div
+            style={{
+              maskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
+              WebkitMaskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
+            }}
+          >
+            <CardMarquee ariaLabel="Форматы обучения" direction="right" speedSeconds={52}>
+              {FORMATS.map((format) => (
+                <FormatCard key={format.slug} format={format} />
+              ))}
+            </CardMarquee>
+          </div>
         </div>
       </section>
 

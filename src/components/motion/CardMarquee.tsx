@@ -32,7 +32,7 @@ export function CardMarquee({
         {[0, 1].map((copy) => (
           <div key={copy} aria-hidden={copy === 1 || undefined} className="flex shrink-0 items-stretch gap-5">
             {items.map((item, i) => (
-              <div key={i} className="w-[19rem] shrink-0 sm:w-96">
+              <div key={i} className="flex w-[19rem] shrink-0 sm:w-96">
                 {item}
               </div>
             ))}
