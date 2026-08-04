@@ -12,6 +12,7 @@ import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Marquee } from "@/components/motion/Marquee";
+import { CardMarquee } from "@/components/motion/CardMarquee";
 import { StepsSection } from "@/components/home/StepsSection";
 import { GradientCta } from "@/components/ui/GradientCta";
 import { ShowcaseSection, type ShowcaseItem } from "@/components/home/ShowcaseSection";
@@ -89,6 +90,18 @@ const DIRECTIONS = [
     description: "Органы управления, имитирующие рабочее место оператора спецтехники, — для отработки реальных сценариев.",
   },
 ];
+
+function FormatCard({ direction }: { direction: (typeof DIRECTIONS)[number] }) {
+  return (
+    <Card className="h-full">
+      <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
+        <FormatIcon icon={direction.icon} className="h-6 w-6" />
+      </div>
+      <h3 className="mt-4 font-bold">{direction.title}</h3>
+      <p className="mt-2 text-sm text-fg-secondary">{direction.description}</p>
+    </Card>
+  );
+}
 
 async function getShowcaseItems(): Promise<ShowcaseItem[]> {
   const products = await prisma.product.findMany({
@@ -267,19 +280,31 @@ export default async function HomePage() {
               Шесть форматов обучения
             </h2>
           </Reveal>
-
-          <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {DIRECTIONS.map((direction) => (
-              <Card key={direction.title}>
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
-                  <FormatIcon icon={direction.icon} className="h-6 w-6" />
-                </div>
-                <h3 className="mt-4 font-bold">{direction.title}</h3>
-                <p className="mt-2 text-sm text-fg-secondary">{direction.description}</p>
-              </Card>
-            ))}
-          </StaggerGroup>
         </Container>
+
+        {/* Two independently-scrolling rows (opposite directions, slow) —
+            hovering a row pauses only that row so the card underneath the
+            cursor can actually be read. Full-bleed, faded at the edges via
+            mask so cards visibly continue past the viewport instead of
+            hard-cutting. */}
+        <div
+          className="mt-14 space-y-5"
+          style={{
+            maskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
+            WebkitMaskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
+          }}
+        >
+          <CardMarquee ariaLabel="Форматы обучения, ряд 1" direction="left" speedSeconds={55}>
+            {DIRECTIONS.slice(0, 3).map((direction) => (
+              <FormatCard key={direction.title} direction={direction} />
+            ))}
+          </CardMarquee>
+          <CardMarquee ariaLabel="Форматы обучения, ряд 2" direction="right" speedSeconds={65}>
+            {DIRECTIONS.slice(3).map((direction) => (
+              <FormatCard key={direction.title} direction={direction} />
+            ))}
+          </CardMarquee>
+        </div>
       </section>
 
       <section className="py-24">
