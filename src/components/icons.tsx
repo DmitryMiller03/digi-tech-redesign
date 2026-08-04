@@ -102,23 +102,32 @@ export function CategoryIcon({ icon, ...props }: { icon: string } & IconProps) {
 }
 
 const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
+  // These six are redrawn after the reference set on the old site
+  // (digi-tech.dev) — a stand/cabinet-on-legs family rather than generic
+  // tech icons, so the six read as one consistent product line. workshop
+  // and simulator keep their own simpler marks instead: matching the
+  // reference there would have made them read as near-duplicates of
+  // interactive/teaching at this size.
   lab: (props) => (
     <Base {...props}>
-      <path d="M9 3h6M10 3v6l-5 10a1.5 1.5 0 0 0 1.4 2h11.2a1.5 1.5 0 0 0 1.4-2l-5-10V3" />
-      <path d="M7.5 14h9" />
+      <path d="M6 8h12v10a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8z" />
+      <path d="M6 8V5h12v3" />
+      <path d="M9 11v5M12 11v5M15 11v5" />
+      <path d="M8 19v2M16 19v2" />
     </Base>
   ),
   teaching: (props) => (
     <Base {...props}>
-      <circle cx="12" cy="9" r="4" />
-      <path d="M12 2.5V4M12 14v1.5M18.5 9H20M4 9h1.5M16.5 4.5l1-1M6.5 13.5l-1 1M16.5 13.5l1 1M6.5 4.5l-1-1" />
-      <path d="M4 21h16M7.5 21v-3M16.5 21v-3" />
+      <rect x="4" y="4" width="16" height="10" rx="1" />
+      <path d="M8 4v10M12 4v10M16 4v10" />
+      <path d="M8 18v2M16 18v2" />
     </Base>
   ),
   interactive: (props) => (
     <Base {...props}>
-      <path d="M4 20 20 6" />
-      <rect x="9" y="3" width="10" height="14" rx="1" transform="rotate(20 14 10)" />
+      <path d="M9 4h8l-1 6h-6z" />
+      <path d="M11 10 8 20M15 10l3 10" />
+      <path d="M6 20h12" />
     </Base>
   ),
   workshop: (props) => (
@@ -128,9 +137,9 @@ const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
   software: (props) => (
     <Base {...props}>
-      <rect x="3" y="4" width="18" height="12" rx="1.5" />
-      <path d="M8 20h8M12 16v4" />
-      <path d="M9 8l3 2-3 2" />
+      <path d="M5 5h14v9H5z" />
+      <path d="M3 19h18l-2-3H5z" />
+      <path d="M10.2 7.7 12 6.8l1.8.9v2.4l-1.8.9-1.8-.9z" />
     </Base>
   ),
   simulator: (props) => (

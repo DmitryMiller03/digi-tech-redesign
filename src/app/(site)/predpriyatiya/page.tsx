@@ -98,7 +98,7 @@ export default function PredpriyatiyaPage() {
             Расскажем, какие тренажёры подойдут под ваши производственные процессы.
           </p>
           <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" arrow>
+            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
               Связаться с нами
             </Button>
           </MagneticButton>

@@ -24,6 +24,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 
+# Mount point for the uploads volume (docker-compose.yml) — created and
+# owned by nextjs ahead of time so the app can write into it once the
+# volume is mounted over it; the volume's first-run content is seeded
+# from whatever's here, ownership included.
+RUN mkdir -p ./public/uploads && chown -R nextjs:nodejs ./public/uploads
+
 USER nextjs
 
 EXPOSE 3000

@@ -67,17 +67,17 @@ export function PinnedStats({
   return (
     <dl ref={containerRef} className={className}>
       {stats.map((stat, i) => (
-        <div key={stat.label}>
+        <div key={stat.label} className="px-2 py-2 sm:px-10 sm:py-0">
           <dt
             ref={(el) => {
               numberRefs.current[i] = el;
             }}
-            className="bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-extrabold text-transparent"
+            className="bg-gradient-to-r from-primary to-accent bg-clip-text text-5xl font-extrabold tracking-tight text-transparent sm:text-6xl"
           >
             {stat.value.toLocaleString("ru-RU")}
             {stat.suffix}
           </dt>
-          <dd className="mt-1 text-sm text-fg-muted">{stat.label}</dd>
+          <dd className="label mt-2 text-fg-muted">{stat.label}</dd>
         </div>
       ))}
     </dl>

@@ -8,6 +8,9 @@ export type FormatContent = {
   slug: string;
   icon: string;
   title: string;
+  /** One short line for the homepage mini-card — the full `summary` is
+   * meant for the format's own page and runs too long for a compact tile. */
+  teaser: string;
   summary: string;
   sections: FormatSection[];
 };
@@ -17,6 +20,7 @@ export const FORMATS: FormatContent[] = [
     slug: "laboratornyy-stend",
     icon: "lab",
     title: "Лабораторный стенд",
+    teaser: "Имитирует реальное оборудование для безопасной практики.",
     summary:
       "Учебное оборудование, имитирующее работу реальных технических систем для безопасного освоения практических навыков.",
     sections: [
@@ -33,6 +37,7 @@ export const FORMATS: FormatContent[] = [
     slug: "uchebnyy-stend",
     icon: "teaching",
     title: "Учебный стенд",
+    teaser: "Компактная модель с наглядным принципом работы.",
     summary:
       "Компактная модель реального оборудования, наглядно демонстрирующая устройство и принципы работы механизмов с возможностью экспериментирования.",
     sections: [
@@ -49,6 +54,7 @@ export const FORMATS: FormatContent[] = [
     slug: "interaktivnyy-stend",
     icon: "interactive",
     title: "Интерактивный стенд",
+    teaser: "Физика и цифра вместе, в реальном времени.",
     summary:
       "Мультимедийное оборудование, объединяющее традиционные и цифровые технологии для интерактивного обучения в реальном времени.",
     sections: [
@@ -65,6 +71,7 @@ export const FORMATS: FormatContent[] = [
     slug: "masterskaya",
     icon: "workshop",
     title: "Мастерская",
+    teaser: "Настоящие инструменты в условиях профессии.",
     summary:
       "Специально оборудованное помещение, воссоздающее рабочую среду профессии для практического освоения навыков.",
     sections: [
@@ -81,6 +88,7 @@ export const FORMATS: FormatContent[] = [
     slug: "programmnyy-kompleks",
     icon: "software",
     title: "Программный комплекс",
+    teaser: "Виртуальная среда для отработки любых сценариев.",
     summary:
       "Цифровая виртуальная среда, имитирующая реальные условия работы для отработки профессиональных действий.",
     sections: [
@@ -97,6 +105,7 @@ export const FORMATS: FormatContent[] = [
     slug: "trenazher-simulyator",
     icon: "simulator",
     title: "Тренажёр-симулятор",
+    teaser: "Органы управления рабочим местом оператора.",
     summary:
       "Учебный аппаратно-программный комплекс с органами управления, имитирующими рабочее место оператора спецтехники, для отработки навыков управления и действий в различных производственных ситуациях.",
     sections: [

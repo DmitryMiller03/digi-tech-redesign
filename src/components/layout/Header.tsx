@@ -26,7 +26,13 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const [revealed, setRevealed] = useState(true);
+  // On the home page the header starts fully hidden — not just
+  // transparent — so the very first thing a visitor sees is the hero
+  // video with nothing floating over it. It reveals itself the moment
+  // they start scrolling (the effect below), same as it hides/reveals on
+  // scroll direction afterward. Every other page keeps the header visible
+  // from the start.
+  const [revealed, setRevealed] = useState(!isHome);
   // On every page but the home one, the header always has its solid
   // background. On the home page it starts fully transparent over the
   // hero video (just the logo/nav floating) and only picks up the
@@ -39,7 +45,7 @@ export function Header() {
   solidRef.current = solid;
 
   useEffect(() => {
-    setRevealed(true);
+    setRevealed(!isHome);
     setSolid(!isHome);
 
     // Anchor is the scroll position where we last committed to a
@@ -143,7 +149,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             href="/contacts"
-            className="hidden rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.03] lg:block"
+            className="btn-hover-key relative hidden rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm lg:block"
           >
             Оставить заявку
           </Link>
@@ -214,7 +220,7 @@ export function Header() {
             <Link
               href="/contacts"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-center text-sm font-semibold text-white"
+              className="btn-hover-key relative mt-2 rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-center text-sm font-semibold text-white"
             >
               Оставить заявку
             </Link>

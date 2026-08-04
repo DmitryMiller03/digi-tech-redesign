@@ -32,44 +32,39 @@ const SHOWCASE_PRODUCT_SLUGS = [
   "obsluzhivanie-i-diagnostika-tokarnogo-stanka",
 ];
 
-function gradientWord(word: string) {
-  return <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{word}</span>;
-}
-
-function outlineWord(word: string) {
-  return <span className="marquee-item-outline">{word}</span>;
+function accentWord(word: string) {
+  return <span className="text-accent-2">{word}</span>;
 }
 
 const FORMATS_MARQUEE = [
-  gradientWord("VR-тренажёры"),
+  accentWord("VR-тренажёры"),
   "Учебные стенды",
-  outlineWord("3D-атласы"),
+  accentWord("3D-атласы"),
   "Симуляторы",
-  gradientWord("Лаборатории"),
+  accentWord("Лаборатории"),
   "Мастерские под ключ",
 ];
 
 const INDUSTRIES_MARQUEE = [
-  gradientWord("Нефть и газ"),
+  accentWord("Нефть и газ"),
   "Строительство",
-  outlineWord("Энергетика"),
+  accentWord("Энергетика"),
   "Металлургия",
-  gradientWord("Машиностроение"),
+  accentWord("Машиностроение"),
   "Транспорт",
-  outlineWord("Сельское хозяйство"),
+  accentWord("Сельское хозяйство"),
 ];
 
 function FormatCard({ format }: { format: (typeof FORMATS)[number] }) {
   return (
-    <Card as={Link} href={`/formats/${format.slug}`} interactive className="h-full">
-      <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
-        <FormatIcon icon={format.icon} className="h-6 w-6" />
+    <Card as={Link} href={`/formats/${format.slug}`} interactive padding="sm" className="h-full">
+      <div className="flex items-center gap-3">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
+          <FormatIcon icon={format.icon} className="h-5 w-5" />
+        </div>
+        <h3 className="font-bold">{format.title}</h3>
       </div>
-      <h3 className="mt-4 font-bold">{format.title}</h3>
-      <p className="mt-2 text-sm text-fg-secondary">{format.summary}</p>
-      <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
-        Подробнее <ArrowRightIcon className="h-3.5 w-3.5" />
-      </span>
+      <p className="mt-2 text-sm text-fg-secondary">{format.teaser}</p>
     </Card>
   );
 }
@@ -116,14 +111,27 @@ async function getCategoryTiles() {
     icon: iconBySlug.get(category.slug) ?? "complex",
     productCount: category._count.products,
     coverImage: category.products[0]?.images[0] ?? null,
-    featured: category._count.products >= FEATURED_MIN_PRODUCTS,
   }));
 
-  // The featured (2x2) tile has to lead the grid — auto-placement can
-  // only pack the rest cleanly around it if it's first. A featured tile
-  // buried mid-list forces `grid-flow-dense` to reorder everything else
-  // around it, which reads as a random shuffle rather than a layout.
-  return tiles.sort((a, b) => Number(b.featured && b.coverImage) - Number(a.featured && a.coverImage));
+  // Exactly one 2x2 photo tile — the single deepest catalog by product
+  // count — leads the grid, everything else is a plain tile. Letting
+  // *every* category past FEATURED_MIN_PRODUCTS go big broke the grid the
+  // moment two of them qualified: only the very first can actually get a
+  // clean 2x2 slot, so the second one rendered squashed instead.
+  let biggestIndex = -1;
+  for (let i = 0; i < tiles.length; i++) {
+    const candidate = tiles[i];
+    if (candidate.productCount < FEATURED_MIN_PRODUCTS || !candidate.coverImage) continue;
+    if (biggestIndex === -1 || candidate.productCount > tiles[biggestIndex].productCount) {
+      biggestIndex = i;
+    }
+  }
+
+  const featuredTiles = tiles.map((tile, i) => ({ ...tile, featured: i === biggestIndex }));
+  if (biggestIndex <= 0) return featuredTiles;
+
+  const [featured] = featuredTiles.splice(biggestIndex, 1);
+  return [featured, ...featuredTiles];
 }
 
 export default async function HomePage() {
@@ -142,10 +150,10 @@ export default async function HomePage() {
         />
       </div>
 
-      <section className="border-b border-line py-16">
+      <section className="border-b border-line py-20">
         <Container>
           <PinnedStats
-            className="flex flex-wrap justify-center gap-x-16 gap-y-6 text-center sm:justify-between sm:text-left"
+            className="grid grid-cols-1 divide-y divide-line text-center sm:grid-cols-3 sm:divide-x sm:divide-y-0"
             stats={[
               { value: 5000, suffix: "+", label: "студентов" },
               { value: 11, suffix: "", label: "направлений" },
@@ -239,11 +247,19 @@ export default async function HomePage() {
 
       <section id="formats" className="border-t border-line bg-bg-surface/50 py-24">
         <Container>
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="label text-accent-2">Форматы</span>
+          <Reveal className="max-w-2xl">
+            <span className="label text-accent-2">Форматы обучения</span>
             <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Шесть форматов обучения
+              Один тренажёр —{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                шесть форматов
+              </span>{" "}
+              поставки
             </h2>
+            <p className="mt-4 text-fg-secondary">
+              От компактного лабораторного стенда до VR-тренажёра — подбираем формат под бюджет
+              и площадку колледжа.
+            </p>
           </Reveal>
         </Container>
 
@@ -293,7 +309,7 @@ export default async function HomePage() {
                 одного рабочего дня.
               </p>
               <MagneticButton className="mt-8">
-                <Button href="/contacts" variant="inverted" arrow className="shadow-md">
+                <Button href="/contacts" variant="inverted" emphasis="key" arrow className="shadow-md">
                   Запросить демо
                 </Button>
               </MagneticButton>

@@ -23,7 +23,13 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${montserrat.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col">
-        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false} storageKey="digitech-theme">
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="light"
+          enableSystem={false}
+          storageKey="digitech-theme"
+          disableTransitionOnChange
+        >
           {children}
         </ThemeProvider>
       </body>

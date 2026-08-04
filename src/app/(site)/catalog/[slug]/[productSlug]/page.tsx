@@ -165,7 +165,7 @@ export default async function ProductPage({
                 Покажем в формате видеозвонка и ответим на вопросы по внедрению.
               </p>
               <MagneticButton className="mt-4">
-                <Button href="/contacts" variant="inverted" arrow>
+                <Button href="/contacts" variant="inverted" emphasis="key" arrow>
                   Оставить заявку
                 </Button>
               </MagneticButton>

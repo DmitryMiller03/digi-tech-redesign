@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { createProduct } from "../actions";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 export default async function NewProductPage() {
   const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
@@ -57,15 +58,10 @@ export default async function NewProductPage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700">
-            Изображения <span className="text-slate-400">(по одной ссылке на строку)</span>
-          </label>
-          <textarea
-            name="images"
-            rows={3}
-            placeholder="/uploads/product-1.jpg"
-            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-          />
+          <label className="block text-sm font-medium text-slate-700">Изображения</label>
+          <div className="mt-1">
+            <ImageUploader name="images" />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-slate-700">

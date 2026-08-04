@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { updateProduct } from "../../actions";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 export default async function EditProductPage({
   params,
@@ -79,15 +80,10 @@ export default async function EditProductPage({
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700">
-            Изображения <span className="text-slate-400">(по одной ссылке на строку)</span>
-          </label>
-          <textarea
-            name="images"
-            rows={3}
-            defaultValue={product.images.join("\n")}
-            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-          />
+          <label className="block text-sm font-medium text-slate-700">Изображения</label>
+          <div className="mt-1">
+            <ImageUploader name="images" defaultUrls={product.images} />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-slate-700">

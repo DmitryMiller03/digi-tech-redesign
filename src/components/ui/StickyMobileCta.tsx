@@ -14,7 +14,7 @@ export function StickyMobileCta({ label }: { label: string }) {
     >
       <Link
         href="/contacts"
-        className="flex items-center justify-center rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-3 text-sm font-semibold text-white shadow-md"
+        className="btn-hover-key relative flex items-center justify-center rounded-pill bg-gradient-to-r from-primary to-accent px-5 py-3 text-sm font-semibold text-white shadow-md"
       >
         {label}
       </Link>

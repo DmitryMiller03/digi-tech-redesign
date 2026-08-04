@@ -62,7 +62,7 @@ export default function ProfessionalismPage() {
             Пришлём подборку тренажёров под ваши специальности и поможем с расчётом сметы.
           </p>
           <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" arrow>
+            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
               Обсудить кластер
             </Button>
           </MagneticButton>

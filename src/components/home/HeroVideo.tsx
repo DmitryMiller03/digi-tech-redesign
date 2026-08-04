@@ -47,19 +47,17 @@ export function HeroVideo() {
           </Reveal>
 
           <Reveal delay={0.3}>
-            {/* A/B test: sheen-sweep vs. scale+lift, replacing the magnetic
-                cursor-follow on just these two buttons for comparison. */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href="/contacts"
-                className="btn-sheen group inline-flex items-center gap-2 rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white shadow-md"
+                className="btn-hover-key relative group inline-flex items-center gap-2 rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white shadow-md"
               >
                 Запросить демо
                 <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/catalog"
-                className="rounded-pill border border-white/30 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/15 motion-safe:hover:scale-[1.03] motion-safe:hover:shadow-lg"
+                className="btn-hover rounded-pill border border-white/30 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors duration-200 hover:bg-white/15"
               >
                 Смотреть каталог
               </Link>

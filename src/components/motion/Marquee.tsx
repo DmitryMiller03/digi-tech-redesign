@@ -13,7 +13,6 @@ export function Marquee({
   direction = "left",
   speedSeconds = 32,
   pauseOnHover = true,
-  variant = "solid",
   ariaLabel,
   decorative = false,
   className = "",
@@ -22,7 +21,6 @@ export function Marquee({
   direction?: "left" | "right";
   speedSeconds?: number;
   pauseOnHover?: boolean;
-  variant?: "solid" | "outline" | "muted";
   /** Required unless `decorative` — a screen reader still needs to know what this group is. */
   ariaLabel?: string;
   /** Purely visual transition with no unique content (e.g. it restates the
@@ -48,13 +46,7 @@ export function Marquee({
             {items.map((item, i) => (
               <li
                 key={i}
-                className={`marquee-item shrink-0 whitespace-nowrap font-bold uppercase tracking-tight ${
-                  variant === "outline"
-                    ? "marquee-item-outline"
-                    : variant === "muted"
-                      ? "text-fg-muted"
-                      : "text-fg-primary"
-                }`}
+                className="marquee-item shrink-0 whitespace-nowrap font-bold uppercase tracking-tight text-fg-primary"
               >
                 {item}
                 <span className="marquee-dot mx-[clamp(1rem,3vw,2.5rem)] inline-block align-middle" aria-hidden="true">

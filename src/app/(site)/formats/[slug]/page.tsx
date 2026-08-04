@@ -175,7 +175,7 @@ export default async function FormatPage({
                   течение одного рабочего дня.
                 </p>
                 <MagneticButton className="mt-8">
-                  <Button href="/contacts" variant="inverted" arrow className="shadow-md">
+                  <Button href="/contacts" variant="inverted" emphasis="key" arrow className="shadow-md">
                     Запросить демо
                   </Button>
                 </MagneticButton>

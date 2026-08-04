@@ -21,6 +21,13 @@ export function ScrollToTop() {
       y: visible ? 0 : 12,
       duration: 0.3,
       ease: "power2.out",
+      overwrite: true,
+      // Once the entrance/exit settles, hand `transform` back to CSS —
+      // otherwise GSAP's inline style lingers forever and outranks the
+      // :hover scale from .btn-hover-key (inline always beats a
+      // stylesheet rule), which read as the button "jumping" the moment
+      // hover tried to kick in shortly after it appeared.
+      clearProps: "transform",
     });
   }, [visible]);
 
@@ -39,7 +46,7 @@ export function ScrollToTop() {
       type="button"
       onClick={handleClick}
       aria-label="Наверх"
-      className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-primary to-accent text-white shadow-lg transition-transform hover:scale-110 invisible opacity-0"
+      className="btn-hover-key invisible fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-primary to-accent text-white opacity-0 shadow-lg"
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M12 19V5M5 12l7-7 7 7" />

@@ -98,7 +98,7 @@ export default function VuzyPage() {
             Пришлём подборку тренажёров под вашу специальность и предложим формат пилотного занятия.
           </p>
           <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" arrow>
+            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
               Связаться с нами
             </Button>
           </MagneticButton>

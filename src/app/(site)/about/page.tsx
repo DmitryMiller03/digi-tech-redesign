@@ -73,7 +73,7 @@ export default function AboutPage() {
             Хотите узнать больше о наших модулях?
           </h2>
           <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" arrow>
+            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
               Связаться с нами
             </Button>
           </MagneticButton>

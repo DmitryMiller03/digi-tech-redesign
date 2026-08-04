@@ -97,7 +97,7 @@ export default function SsuzyPage() {
             Оставьте заявку — покажем демо-версию под ваши специальности в течение одного рабочего дня.
           </p>
           <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" arrow>
+            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
               Запросить демо
             </Button>
           </MagneticButton>

@@ -22,6 +22,12 @@ type SharedProps = {
   arrow?: boolean;
   className?: string;
   children: ReactNode;
+  /** "key" = the settled combo hover (scale/lift + sheen sweep), reserved
+   * for buttons that actually drive a conversion (demo request CTAs).
+   * Everything else gets the plain scale/lift only. MagneticButton (when
+   * a caller wraps one) applies its cursor-follow to its own wrapper div,
+   * not this element, so the two don't fight over `transform`. */
+  emphasis?: "default" | "key";
 };
 
 type ButtonAsLink = SharedProps &
@@ -35,15 +41,13 @@ export function Button({
   variant = "primary",
   size = "md",
   arrow = false,
+  emphasis = "default",
   className = "",
   children,
   ...rest
 }: ButtonAsLink | ButtonAsButton) {
-  // No hover:scale here on purpose — call sites are wrapped in
-  // MagneticButton, which already drives hover/press feedback via GSAP
-  // transform; a competing CSS transform would fight it. Brightness is a
-  // transform-free way to still signal hover.
-  const classes = `group inline-flex items-center gap-2 rounded-pill font-semibold transition-[filter,background-color,color] hover:brightness-105 ${VARIANTS[variant]} ${SIZES[size]} ${className}`;
+  const hoverClass = emphasis === "key" ? "btn-hover-key relative" : "btn-hover";
+  const classes = `group inline-flex items-center gap-2 rounded-pill font-semibold transition-colors ${hoverClass} ${VARIANTS[variant]} ${SIZES[size]} ${className}`;
 
   const content = (
     <>

@@ -41,3 +41,9 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# admin-uploaded product images — written at runtime into public/uploads
+# (backed by a Docker volume in production, see docker-compose.yml); real
+# uploads shouldn't end up committed, just the directory itself
+/public/uploads/*
+!/public/uploads/.gitkeep

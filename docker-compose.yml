@@ -31,6 +31,12 @@ services:
       AUTH_SECRET: ${AUTH_SECRET}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      # Admin-uploaded product images (src/app/api/admin/upload) — without
+      # this, anything uploaded at runtime lives only in the container's
+      # writable layer and is gone on the next `docker compose up` rebuild.
+      - uploads_data:/app/public/uploads
 
 volumes:
   db_data:
+  uploads_data:
