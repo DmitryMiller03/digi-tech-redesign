@@ -266,7 +266,7 @@ export default async function HomePage() {
           items={INDUSTRIES_MARQUEE}
           direction="right"
           speedSeconds={52}
-          variant="outline"
+          variant="muted"
           decorative
           pauseOnHover={false}
         />

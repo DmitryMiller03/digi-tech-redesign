@@ -228,6 +228,35 @@ body {
   }
 }
 
+/* Glow-pulse — A/B alternative to .scan-line: a soft radial brand-glow
+   fades in behind the image content instead of a bar sweeping across
+   it. Quieter, no motion path, just an opacity fade. */
+.card-glow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 40%, var(--accent) 0%, var(--primary) 35%, transparent 70%);
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}
+
+.group:hover .card-glow::before {
+  opacity: 0.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-glow::before {
+    transition: none;
+  }
+}
+
 /* Animated brand-gradient CTA background — a slow pan, not a shimmer:
    amplitude and speed are deliberately mild so it reads as "alive" without
    pulling attention from the CTA's own text/button. */

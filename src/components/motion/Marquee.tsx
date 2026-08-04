@@ -22,7 +22,7 @@ export function Marquee({
   direction?: "left" | "right";
   speedSeconds?: number;
   pauseOnHover?: boolean;
-  variant?: "solid" | "outline";
+  variant?: "solid" | "outline" | "muted";
   /** Required unless `decorative` — a screen reader still needs to know what this group is. */
   ariaLabel?: string;
   /** Purely visual transition with no unique content (e.g. it restates the
@@ -49,7 +49,11 @@ export function Marquee({
               <li
                 key={i}
                 className={`marquee-item shrink-0 whitespace-nowrap font-bold uppercase tracking-tight ${
-                  variant === "outline" ? "marquee-item-outline" : "text-fg-primary"
+                  variant === "outline"
+                    ? "marquee-item-outline"
+                    : variant === "muted"
+                      ? "text-fg-muted"
+                      : "text-fg-primary"
                 }`}
               >
                 {item}
