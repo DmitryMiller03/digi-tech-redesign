@@ -26,7 +26,12 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const [revealed, setRevealed] = useState(true);
+  // On the home page the header stays fully hidden for as long as the
+  // hero video is the background — landing on the page, scrolling down
+  // within the hero, scrolling back up within the hero, all keep it
+  // hidden, so it can never sit on top of the hero heading. It only
+  // appears once the hero has fully scrolled past.
+  const [revealed, setRevealed] = useState(!isHome);
   // On every page but the home one, the header always has its solid
   // background. On the home page it starts fully transparent over the
   // hero video (just the logo/nav floating) and only picks up the
@@ -39,7 +44,7 @@ export function Header() {
   solidRef.current = solid;
 
   useEffect(() => {
-    setRevealed(true);
+    setRevealed(!isHome);
     setSolid(!isHome);
 
     // Anchor is the scroll position where we last committed to a
@@ -56,12 +61,12 @@ export function Header() {
       const y = window.scrollY;
 
       // While still over the hero video (home page, not yet solid) the
-      // header always stays visible — hiding it while the video is still
-      // the whole background reads as broken, not as a deliberate
-      // scroll-away. Hide-on-scroll-down only kicks in once the header
-      // has picked up its solid background past the hero.
+      // header stays hidden regardless of scroll direction — revealing
+      // it there, even on scroll-up, would sit it on top of the hero
+      // heading. It only starts reacting to scroll direction once solid,
+      // past the hero (branch below, unchanged).
       if (!solidRef.current) {
-        setRevealed(true);
+        setRevealed(false);
         anchorY = y;
         return;
       }
@@ -99,7 +104,11 @@ export function Header() {
     }
 
     const observer = new IntersectionObserver(([entry]) => {
-      setSolid(!entry.isIntersecting);
+      const pastHero = !entry.isIntersecting;
+      setSolid(pastHero);
+      // Pop the header straight in the moment the hero clears, instead of
+      // waiting for the next scroll tick to notice.
+      setRevealed(pastHero);
     });
     observer.observe(sentinel);
     return () => observer.disconnect();
