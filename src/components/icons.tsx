@@ -102,12 +102,9 @@ export function CategoryIcon({ icon, ...props }: { icon: string } & IconProps) {
 }
 
 const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
-  // These six are redrawn after the reference set on the old site
-  // (digi-tech.dev) — a stand/cabinet-on-legs family rather than generic
-  // tech icons, so the six read as one consistent product line. workshop
-  // and simulator keep their own simpler marks instead: matching the
-  // reference there would have made them read as near-duplicates of
-  // interactive/teaching at this size.
+  // Redrawn after the reference set on the old site (digi-tech.dev) — a
+  // stand/cabinet-on-legs family rather than generic tech icons, so the
+  // six read as one consistent product line.
   lab: (props) => (
     <Base {...props}>
       <path d="M6 8h12v10a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8z" />
@@ -132,7 +129,8 @@ const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
   workshop: (props) => (
     <Base {...props}>
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+      <rect x="4" y="4" width="16" height="16" rx="1" />
+      <path d="M15 9.3a2 2 0 1 0-2.8 2.8L8 16.3V18h1.7l4.2-4.2a2 2 0 0 0 2.8-2.8z" />
     </Base>
   ),
   software: (props) => (
@@ -144,9 +142,9 @@ const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
   simulator: (props) => (
     <Base {...props}>
-      <circle cx="12" cy="12" r="8" />
-      <circle cx="12" cy="12" r="2.25" />
-      <path d="M12 4v3.5M12 16.5V20M5.6 7.4l2.5 2M15.9 14.6l2.5 2M18.4 7.4l-2.5 2M8.1 14.6l-2.5 2" />
+      <rect x="5" y="3.5" width="13" height="9" rx="1" transform="rotate(-6 11.5 8)" />
+      <path d="M9 18l1.7-4.5M16 18l-1.2-4" />
+      <path d="M5 21h14" />
     </Base>
   ),
 };

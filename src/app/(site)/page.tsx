@@ -57,14 +57,14 @@ const INDUSTRIES_MARQUEE = [
 
 function FormatCard({ format }: { format: (typeof FORMATS)[number] }) {
   return (
-    <Card as={Link} href={`/formats/${format.slug}`} interactive padding="sm" className="h-full">
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
-          <FormatIcon icon={format.icon} className="h-5 w-5" />
+    <Card as={Link} href={`/formats/${format.slug}`} interactive className="h-full">
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 text-primary">
+          <FormatIcon icon={format.icon} className="h-7 w-7" />
         </div>
-        <h3 className="font-bold">{format.title}</h3>
+        <h3 className="text-lg font-bold">{format.title}</h3>
       </div>
-      <p className="mt-2 text-sm text-fg-secondary">{format.teaser}</p>
+      <p className="mt-3 text-sm text-fg-secondary">{format.teaser}</p>
     </Card>
   );
 }
@@ -271,8 +271,8 @@ export default async function HomePage() {
             going. Extra top padding + overflow-x-only clipping on the card
             row (see CardMarquee) so a card's hover lift doesn't get sheared
             off by the row above. */}
-        <div className="mt-14 space-y-7">
-          <div className="flex h-16 items-center overflow-hidden border-y border-line md:h-20">
+        <div className="mt-10 space-y-8">
+          <div className="flex h-20 items-center overflow-hidden border-y border-line md:h-28">
             <Marquee
               items={INDUSTRIES_MARQUEE}
               direction="right"

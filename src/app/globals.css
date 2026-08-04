@@ -160,7 +160,7 @@ body {
 }
 
 .marquee-item {
-  font-size: clamp(1.1rem, 3.4vw, 2.75rem);
+  font-size: clamp(1.1rem, 3.6vw, 3rem);
 }
 
 .marquee-dot {
@@ -187,10 +187,6 @@ body {
 .gradient-cta-animated {
   background-size: 200% 200%;
   animation: gradient-pan 14s ease-in-out infinite;
-}
-
-.gradient-cta-animated:hover {
-  animation-duration: 7s;
 }
 
 @keyframes gradient-pan {
