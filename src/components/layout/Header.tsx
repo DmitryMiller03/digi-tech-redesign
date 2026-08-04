@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -32,6 +32,11 @@ export function Header() {
   // hero video (just the logo/nav floating) and only picks up the
   // background/blur once scrolled past the hero-intro threshold.
   const [solid, setSolid] = useState(!isHome);
+  // Read inside the scroll handler below without re-subscribing it every
+  // time `solid` flips — the effect that owns the listener only depends
+  // on `isHome`.
+  const solidRef = useRef(solid);
+  solidRef.current = solid;
 
   useEffect(() => {
     setRevealed(true);
@@ -44,14 +49,9 @@ export function Header() {
     // crosses the "always show near top" threshold would immediately
     // continue past it and re-hide the header a tick later, which
     // reads as a jarring flash rather than a smooth appearance.
-    //
-    // The same 80px/24px thresholds also keep the header (over the hero
-    // video, on home) from ever reaching the hero heading: the heading
-    // sits vertically centered, well below where the header hides by —
-    // by the time scroll has moved it near the top, the header has
-    // already hidden itself, so a transparent header floating at the
-    // very top never overlaps it.
     const HYSTERESIS = 24;
+    // Header content is h-16 (64px) + its 1px border.
+    const HEADER_HEIGHT = 65;
     let anchorY = window.scrollY;
 
     const onScroll = () => {
@@ -67,6 +67,23 @@ export function Header() {
       } else if (anchorY - y > HYSTERESIS) {
         setRevealed(true);
         anchorY = y;
+      }
+
+      // Extra clamp, hero only: the reveal-on-scroll-up above is a
+      // distance heuristic and doesn't know where the hero heading
+      // actually is. On the way back up, a transparent header can catch
+      // up to the heading before it's fully scrolled clear. Hide
+      // whenever the two would actually overlap on screen, checked
+      // against the heading's real position rather than a guessed pixel
+      // threshold — safe on any viewport height or heading length.
+      if (isHome && !solidRef.current) {
+        const heading = document.getElementById("hero-text-block");
+        if (heading) {
+          const rect = heading.getBoundingClientRect();
+          if (rect.top < HEADER_HEIGHT && rect.bottom > 0) {
+            setRevealed(false);
+          }
+        }
       }
     };
 

@@ -32,7 +32,7 @@ export function HeroVideo() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
       <div className="relative z-10 flex h-full flex-col items-start justify-center px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto w-full max-w-7xl">
+        <div id="hero-text-block" className="mx-auto w-full max-w-7xl">
           <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
             Практика для будущих
             <br />
