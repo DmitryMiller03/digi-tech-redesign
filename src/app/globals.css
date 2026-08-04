@@ -256,6 +256,46 @@ body {
   }
 }
 
+/* Sheen-sweep button hover — A/B test against MagneticButton's
+   cursor-follow: a light band sweeps across the button once per hover
+   entry instead of the button moving. Gated on hover capability so it
+   doesn't leave a stray band on touch devices with no true "leave". */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -75%;
+  width: 50%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .btn-sheen:hover::after {
+    animation: btn-sheen-sweep 550ms ease-out;
+  }
+}
+
+@keyframes btn-sheen-sweep {
+  from {
+    left: -75%;
+  }
+  to {
+    left: 125%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-sheen::after {
+    display: none;
+  }
+}
+
 @keyframes dropdown-in {
   from {
     opacity: 0;
