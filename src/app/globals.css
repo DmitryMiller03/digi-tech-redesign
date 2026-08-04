@@ -144,12 +144,19 @@ body {
   }
 }
 
-.marquee-track {
-  animation: marquee-scroll var(--marquee-duration, 32s) linear infinite;
-}
+/* Layered (not left as plain unlayered rules) so Tailwind's utilities —
+   notably the per-row `group-hover/marquee:[animation-play-state:paused]`
+   pause — can actually out-specificity this base animation instead of
+   always losing to it (unlayered author CSS beats every Tailwind layer
+   outright, regardless of specificity). */
+@layer utilities {
+  .marquee-track {
+    animation: marquee-scroll var(--marquee-duration, 32s) linear infinite;
+  }
 
-.marquee-track.marquee-reverse {
-  animation-direction: reverse;
+  .marquee-track.marquee-reverse {
+    animation-direction: reverse;
+  }
 }
 
 .marquee-item {
@@ -157,8 +164,8 @@ body {
 }
 
 .marquee-item-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--fg-muted);
+  color: color-mix(in srgb, var(--accent) 14%, transparent);
+  -webkit-text-stroke: 1.5px var(--accent);
 }
 
 .marquee-dot {

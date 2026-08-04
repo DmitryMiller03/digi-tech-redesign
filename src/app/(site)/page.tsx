@@ -50,13 +50,13 @@ const FORMATS_MARQUEE = [
 ];
 
 const INDUSTRIES_MARQUEE = [
-  "Нефть и газ",
+  gradientWord("Нефть и газ"),
   "Строительство",
-  "Энергетика",
+  outlineWord("Энергетика"),
   "Металлургия",
-  "Машиностроение",
+  gradientWord("Машиностроение"),
   "Транспорт",
-  "Сельское хозяйство",
+  outlineWord("Сельское хозяйство"),
 ];
 
 function FormatCard({ format }: { format: (typeof FORMATS)[number] }) {
@@ -109,7 +109,7 @@ async function getCategoryTiles() {
 
   const iconBySlug = new Map(CATEGORIES.map((c) => [c.slug, c.icon]));
 
-  return categories.map((category) => ({
+  const tiles = categories.map((category) => ({
     slug: category.slug,
     name: category.name,
     description: category.description ?? "",
@@ -118,6 +118,12 @@ async function getCategoryTiles() {
     coverImage: category.products[0]?.images[0] ?? null,
     featured: category._count.products >= FEATURED_MIN_PRODUCTS,
   }));
+
+  // The featured (2x2) tile has to lead the grid — auto-placement can
+  // only pack the rest cleanly around it if it's first. A featured tile
+  // buried mid-list forces `grid-flow-dense` to reorder everything else
+  // around it, which reads as a random shuffle rather than a layout.
+  return tiles.sort((a, b) => Number(b.featured && b.coverImage) - Number(a.featured && a.coverImage));
 }
 
 export default async function HomePage() {
@@ -171,7 +177,7 @@ export default async function HomePage() {
             </Link>
           </Reveal>
 
-          <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-flow-dense lg:grid-cols-3">
+          <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {categoryTiles.map((category) =>
               category.featured && category.coverImage ? (
                 <Card
@@ -241,28 +247,32 @@ export default async function HomePage() {
           </Reveal>
         </Container>
 
-        {/* One continuous two-line scroll: industry keywords on top, format
-            cards below, both moving right at the same speed. Hovering a
-            format card pauses just that row so it can be clicked through to
-            its own page; the industries line is decorative and keeps going. */}
-        <div className="mt-14 space-y-5">
+        {/* One continuous two-line scroll: industry keywords on top moving
+            right, format cards below moving left — opposing directions read
+            as two distinct, intentional lines rather than one drifting
+            block. Hovering a format card pauses just that row so it can be
+            clicked through; the industries line is decorative and keeps
+            going. Extra top padding + overflow-x-only clipping on the card
+            row (see CardMarquee) so a card's hover lift doesn't get sheared
+            off by the row above. */}
+        <div className="mt-14 space-y-7">
           <div className="flex h-16 items-center overflow-hidden border-y border-line md:h-20">
             <Marquee
               items={INDUSTRIES_MARQUEE}
               direction="right"
               speedSeconds={52}
-              variant="muted"
               decorative
               pauseOnHover={false}
             />
           </div>
           <div
+            className="pt-2"
             style={{
               maskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
               WebkitMaskImage: "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
             }}
           >
-            <CardMarquee ariaLabel="Форматы обучения" direction="right" speedSeconds={52}>
+            <CardMarquee ariaLabel="Форматы обучения" direction="left" speedSeconds={52}>
               {FORMATS.map((format) => (
                 <FormatCard key={format.slug} format={format} />
               ))}

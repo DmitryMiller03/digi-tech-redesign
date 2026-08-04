@@ -21,9 +21,10 @@ function Base({ children, ...props }: IconProps) {
 const CATEGORY_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   oil: (props) => (
     <Base {...props}>
-      <path d="M12 2 8 8a4 4 0 1 0 8 0z" />
-      <path d="M5 22v-6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6" />
-      <path d="M9 22v-4M15 22v-4" />
+      <path d="M9 2h6v3H9z" />
+      <rect x="7" y="5" width="10" height="15" rx="1" />
+      <path d="M7 10h10M7 14h10" />
+      <path d="M4 20h16" />
     </Base>
   ),
   construction: (props) => (
@@ -59,14 +60,17 @@ const CATEGORY_ICONS: Record<string, (props: IconProps) => React.ReactElement> =
   ),
   "metal-ferrous": (props) => (
     <Base {...props}>
-      <rect x="4" y="9" width="16" height="11" rx="1" />
-      <path d="M8 9V6a4 4 0 0 1 8 0v3" />
+      <path d="M10 2h4l1 4H9z" />
+      <path d="M9 6h6l3 15H6z" />
+      <path d="M9.5 13h5" />
     </Base>
   ),
   press: (props) => (
     <Base {...props}>
-      <path d="M4 4h16v6H4z" />
-      <path d="M10 10v4h4v-4M8 20h8" />
+      <path d="M4 4h16" />
+      <path d="M9 9l3 3 3-3" />
+      <rect x="6" y="14" width="12" height="4" rx="0.5" />
+      <path d="M4 21h16" />
     </Base>
   ),
   flask: (props) => (
@@ -106,8 +110,9 @@ const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
   teaching: (props) => (
     <Base {...props}>
-      <rect x="3" y="6" width="18" height="12" rx="1.5" />
-      <path d="M7 10v4M12 9v5M17 11v3" />
+      <circle cx="12" cy="9" r="4" />
+      <path d="M12 2.5V4M12 14v1.5M18.5 9H20M4 9h1.5M16.5 4.5l1-1M6.5 13.5l-1 1M16.5 13.5l1 1M6.5 4.5l-1-1" />
+      <path d="M4 21h16M7.5 21v-3M16.5 21v-3" />
     </Base>
   ),
   interactive: (props) => (
@@ -118,8 +123,7 @@ const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
   workshop: (props) => (
     <Base {...props}>
-      <path d="M3 21V9l9-6 9 6v12" />
-      <path d="M9 21v-6h6v6M9 12h.01M15 12h.01" />
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
     </Base>
   ),
   software: (props) => (
@@ -131,9 +135,9 @@ const FORMAT_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   ),
   simulator: (props) => (
     <Base {...props}>
-      <rect x="3" y="4" width="18" height="11" rx="1.5" />
-      <path d="M7 20h10M9 15v5M15 15v5" />
-      <circle cx="12" cy="9" r="2" />
+      <circle cx="12" cy="12" r="8" />
+      <circle cx="12" cy="12" r="2.25" />
+      <path d="M12 4v3.5M12 16.5V20M5.6 7.4l2.5 2M15.9 14.6l2.5 2M18.4 7.4l-2.5 2M8.1 14.6l-2.5 2" />
     </Base>
   ),
 };

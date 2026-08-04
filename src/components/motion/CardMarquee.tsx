@@ -24,7 +24,11 @@ export function CardMarquee({
   const trackStyle = { "--marquee-duration": `${speedSeconds}s` } as CSSProperties;
 
   return (
-    <div role="group" aria-label={ariaLabel} className={`group/marquee overflow-hidden ${className}`}>
+    <div
+      role="group"
+      aria-label={ariaLabel}
+      className={`group/marquee overflow-x-hidden overflow-y-visible py-1 ${className}`}
+    >
       <div
         className={`marquee-track flex w-max items-stretch gap-5 ${direction === "right" ? "marquee-reverse" : ""} group-hover/marquee:[animation-play-state:paused]`}
         style={trackStyle}
