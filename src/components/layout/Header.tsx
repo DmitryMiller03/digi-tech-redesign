@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -32,6 +32,11 @@ export function Header() {
   // hero video (just the logo/nav floating) and only picks up the
   // background/blur once scrolled past the hero-intro threshold.
   const [solid, setSolid] = useState(!isHome);
+  // Read inside the scroll handler below without re-subscribing it every
+  // time `solid` flips — the effect that owns the listener only depends
+  // on `isHome`.
+  const solidRef = useRef(solid);
+  solidRef.current = solid;
 
   useEffect(() => {
     setRevealed(true);
@@ -49,6 +54,17 @@ export function Header() {
 
     const onScroll = () => {
       const y = window.scrollY;
+
+      // While still over the hero video (home page, not yet solid) the
+      // header always stays visible — hiding it while the video is still
+      // the whole background reads as broken, not as a deliberate
+      // scroll-away. Hide-on-scroll-down only kicks in once the header
+      // has picked up its solid background past the hero.
+      if (!solidRef.current) {
+        setRevealed(true);
+        anchorY = y;
+        return;
+      }
 
       if (y <= 80) {
         setRevealed(true);
