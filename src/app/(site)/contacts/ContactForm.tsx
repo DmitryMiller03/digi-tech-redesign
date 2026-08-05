@@ -3,7 +3,6 @@
 import { useActionState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { submitContactRequest, type ContactFormState } from "./actions";
 
 const initialState: ContactFormState = { ok: false, message: "" };
@@ -80,15 +79,13 @@ export function ContactForm() {
           className="mt-1 w-full rounded-lg border border-line-strong bg-bg-page px-3 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
         />
       </div>
-      <MagneticButton strength={0.2}>
-        <button
-          type="submit"
-          disabled={pending}
-          className="rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white disabled:opacity-60"
-        >
-          {pending ? "Отправляем…" : "Отправить заявку"}
-        </button>
-      </MagneticButton>
+      <button
+        type="submit"
+        disabled={pending}
+        className="btn-hover-key relative rounded-pill bg-gradient-to-r from-primary to-accent px-6 py-3.5 text-sm font-semibold text-white disabled:opacity-60"
+      >
+        {pending ? "Отправляем…" : "Отправить заявку"}
+      </button>
     </form>
   );
 }

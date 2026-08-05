@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/motion/Reveal";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -164,11 +163,9 @@ export default async function ProductPage({
               <p className="mt-2 text-sm text-white/90">
                 Покажем в формате видеозвонка и ответим на вопросы по внедрению.
               </p>
-              <MagneticButton className="mt-4">
-                <Button href="/contacts" variant="inverted" emphasis="key" arrow>
-                  Оставить заявку
-                </Button>
-              </MagneticButton>
+              <Button href="/contacts" variant="inverted" emphasis="key" arrow className="mt-4">
+                Оставить заявку
+              </Button>
             </GradientCta>
           </Reveal>
         </div>

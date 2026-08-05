@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { PinnedStats } from "@/components/motion/PinnedStats";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -72,11 +71,9 @@ export default function AboutPage() {
           <h2 className="text-2xl font-extrabold sm:text-3xl">
             Хотите узнать больше о наших модулях?
           </h2>
-          <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
-              Связаться с нами
-            </Button>
-          </MagneticButton>
+          <Button href="/contacts" variant="inverted" emphasis="key" arrow className="mt-6">
+            Связаться с нами
+          </Button>
         </GradientCta>
       </Reveal>
     </Container>

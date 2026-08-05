@@ -6,7 +6,6 @@ import { CategoryIcon, FormatIcon, ArrowRightIcon } from "@/components/icons";
 import { FORMATS } from "@/lib/format-content";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { HeroVideo } from "@/components/home/HeroVideo";
 import { PinnedStats } from "@/components/motion/PinnedStats";
 import { Container } from "@/components/ui/Container";
@@ -308,11 +307,9 @@ export default async function HomePage() {
                 Оставьте заявку — покажем демо-версию под ваши специальности в течение
                 одного рабочего дня.
               </p>
-              <MagneticButton className="mt-8">
-                <Button href="/contacts" variant="inverted" emphasis="key" arrow className="shadow-md">
-                  Запросить демо
-                </Button>
-              </MagneticButton>
+              <Button href="/contacts" variant="inverted" emphasis="key" arrow className="mt-8 shadow-md">
+                Запросить демо
+              </Button>
             </GradientCta>
           </Reveal>
         </Container>

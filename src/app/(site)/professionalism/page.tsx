@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -61,11 +60,9 @@ export default function ProfessionalismPage() {
           <p className="mx-auto mt-3 max-w-xl text-white/90">
             Пришлём подборку тренажёров под ваши специальности и поможем с расчётом сметы.
           </p>
-          <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
-              Обсудить кластер
-            </Button>
-          </MagneticButton>
+          <Button href="/contacts" variant="inverted" emphasis="key" arrow className="mt-6">
+            Обсудить кластер
+          </Button>
         </GradientCta>
       </Reveal>
     </Container>

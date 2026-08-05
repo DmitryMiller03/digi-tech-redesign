@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { ProcurementSupport } from "@/components/ProcurementSupport";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
@@ -97,11 +96,9 @@ export default function VuzyPage() {
           <p className="mx-auto mt-3 max-w-xl text-white/90">
             Пришлём подборку тренажёров под вашу специальность и предложим формат пилотного занятия.
           </p>
-          <MagneticButton className="mt-6">
-            <Button href="/contacts" variant="inverted" emphasis="key" arrow>
-              Связаться с нами
-            </Button>
-          </MagneticButton>
+          <Button href="/contacts" variant="inverted" emphasis="key" arrow className="mt-6">
+            Связаться с нами
+          </Button>
         </GradientCta>
       </Reveal>
     </Container>
