@@ -8,7 +8,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { GradientCta } from "@/components/ui/GradientCta";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 
 export function generateStaticParams() {
   return FORMATS.map((format) => ({ slug: format.slug }));
@@ -174,11 +173,9 @@ export default async function FormatPage({
                   Оставьте заявку — подберём модули под ваши специальности и покажем демо в
                   течение одного рабочего дня.
                 </p>
-                <MagneticButton className="mt-8">
-                  <Button href="/contacts" variant="inverted" emphasis="key" arrow className="shadow-md">
-                    Запросить демо
-                  </Button>
-                </MagneticButton>
+                <Button href="/contacts" variant="inverted" emphasis="key" arrow className="mt-8 shadow-md">
+                  Запросить демо
+                </Button>
               </GradientCta>
             </Reveal>
           </section>
